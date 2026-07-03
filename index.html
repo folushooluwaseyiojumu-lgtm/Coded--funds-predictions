@@ -1,0 +1,94 @@
+index.html html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coded Funds Prediction</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="navbar">
+    <div class="logo">⚽ Coded Funds Prediction</div>
+
+    <nav>
+        <a href="#home">🏠 Home</a>
+        <a href="#free">⚽ Free Tips</a>
+        <a href="#vip">💎 VIP</a>
+        <a href="#contact">📞 Contact</a>
+    </nav>
+</header>
+</nav>
+
+<section class="hero">
+    <h2>Welcome to Coded Funds Prediction</h2>
+    <p>Daily football predictions with accurate analysis.</p>
+    <a href="https://wa.me/234812309224" class="btn">🔥 Join VIP Now</a>
+</section>
+
+<section class="countdown">
+    <h2>⏳ Next Match Countdown</h2>
+
+    <div class="countdown-box">
+        <h3>Manchester City vs Arsenal</h3>
+        <p id="timer"></p>
+    </div>
+</section>
+
+<section class="card">
+    <h2>📅 Today's Free Tips</h2>
+
+    <section class="card">
+    <h2>⚽ Live Matches</h2>
+
+    <div class="match-card">
+        <h3>Manchester United vs Chelsea</h3>
+        <p>🔴 LIVE - 67'</p>
+        <p><strong>Score:</strong> 2 - 1</p>
+    </div>
+
+    <div class="match-card">
+        <h3>Barcelona vs Real Madrid</h3>
+        <p>🕒 Starts in 2h 30m</p>
+    </div>
+
+    <div class="match-card">
+        <h3>Bayern Munich vs Dortmund</h3>
+        <p>🕒 Starts in 5h</p>
+    </div>
+</section>
+</section>
+
+<a href="https://wa.me/2348123109224?text=Hello%20Coded%20Funds%2C%20I'm%20interested%20in%20joining%20your%20VIP%20Predictions." class="btn" target="_blank">
+    🔥 Join VIP Now
+</a>
+
+<footer>
+    <p>© 2026 Coded Funds Prediction. All Rights Reserved.</p>
+    <p>WhatsApp: +234 812 309 224</p>
+</footer>
+
+<script>
+const matchDate = new Date("July 5, 2026 18:00:00").getTime();
+
+const timer = setInterval(function () {
+    const now = new Date().getTime();
+    const distance = matchDate - now;
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById("timer").innerHTML =
+        days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+
+    if (distance < 0) {
+        clearInterval(timer);
+        document.getElementById("timer").innerHTML = "🔴 Match Started!";
+    }
+}, 1000);
+</script>
+
+</body>
+</html>
