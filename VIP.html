@@ -1,0 +1,43 @@
+DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>VIP Predictions</title>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+</head>
+
+<body>
+
+<h1>VIP Predictions</h1>
+
+<div id="predictions">Loading predictions...</div>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyCnrqISRt1-B7QmQah9i3f8-qj8bmLAQu8",
+  authDomain: "coded-funds-prediction.firebaseapp.com",
+  projectId: "coded-funds-prediction",
+  storageBucket: "coded-funds-prediction.firebasestorage.app",
+  messagingSenderId: "74680865102",
+  appId: "1:74680865102:web:957bb9e510a63ef7458e1f",
+  measurementId: "G-SM00C9DT3F"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+db.collection("vip").doc("today").onSnapshot((doc) => {
+    if (doc.exists) {
+        document.getElementById("predictions").innerHTML =
+            "<pre>" + doc.data().matches + "</pre>";
+    } else {
+        document.getElementById("predictions").innerHTML =
+            "No VIP predictions available.";
+    }
+});
+</script>
+
+</body>
+</html>
