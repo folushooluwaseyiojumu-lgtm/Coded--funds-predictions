@@ -18,12 +18,13 @@ index.html html>
         <a href="#contact">📞 Contact</a>
     </nav>
 </header>
-</nav>
+
 
 <section class="hero">
     <h2>Welcome to Coded Funds Prediction</h2>
     <p>Daily football predictions with accurate analysis.</p>
-    <a href="https://wa.me/234812309224" class="btn">🔥 Join VIP Now</a>
+
+    <a href="vip.html" class="btn">🔥 Join VIP Now</a>
 </section>
 
 <section class="countdown">
@@ -58,9 +59,9 @@ index.html html>
     </div>
 </section>
 </section>
-
-<a href="https://wa.me/2348123109224?text=Hello%20Coded%20Funds%2C%20I'm%20interested%20in%20joining%20your%20VIP%20Predictions." class="btn" target="_blank">
+<a href="vip.html" class="btn">
     🔥 Join VIP Now
+
 </a>
 
 <footer>
@@ -88,6 +89,29 @@ const timer = setInterval(function () {
         document.getElementById("timer").innerHTML = "🔴 Match Started!";
     }
 }, 1000);
+</script>    
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyCnrqISRt1-B7QmQah9i3f8-qj8bmLAQu8",
+    authDomain: "coded-funds-prediction.firebaseapp.com",
+    projectId: "coded-funds-prediction",
+    storageBucket: "coded-funds-prediction.firebasestorage.app",
+    messagingSenderId: "74680865102",
+    appId: "1:74680865102:web:957bb9e510a63ef7458e1f",
+    measurementId: "G-SM00C9DT3F"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
 </script>
 
 </body>
