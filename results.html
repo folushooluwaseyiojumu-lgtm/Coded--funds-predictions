@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Results - Predict King</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#0d1117;
+    color:white;
+}
+
+header{
+    background:#111827;
+    padding:20px;
+    text-align:center;
+    border-bottom:3px solid #22c55e;
+}
+
+header h1{
+    color:#22c55e;
+}
+
+.container{
+    width:90%;
+    max-width:1000px;
+    margin:auto;
+    padding:30px 0;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+
+th{
+    background:#22c55e;
+    color:white;
+    padding:15px;
+}
+
+td{
+    padding:15px;
+    text-align:center;
+    border-bottom:1px solid #333;
+}
+
+.win{
+    color:#22c55e;
+    font-weight:bold;
+}
+
+.loss{
+    color:#ef4444;
+    font-weight:bold;
+}
+
+.stats{
+    margin-top:40px;
+    background:#111827;
+    padding:20px;
+    border-radius:10px;
+}
+
+.stats h2{
+    color:#22c55e;
+    margin-bottom:15px;
+}
+
+footer{
+    margin-top:40px;
+    background:#111827;
+    text-align:center;
+    padding:20px;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+<h1>🏆 Predict King Results</h1>
+<p>Verified Match Results</p>
+<p class="last-updated">
+    Last Updated: <span id="lastUpdated"></span>
+</p>
+</header>
+
+<div class="container">
+
+<table>
+
+<tr>
+<th>Date</th>
+<th>Match</th>
+<th>Status</th>
+</tr>
+
+<tr>
+<td>03 Jul 2026</td>
+<td>HJK vs Ilves</td>
+<td class="win">✅ WON</td>
+</tr>
+
+<tr>
+<td>03 Jul 2026</td>
+<td>Malmo vs Mjallby</td>
+<td class="win">✅ WON</td>
+</tr>
+
+<tr>
+<td>02 Jul 2026</td>
+<td>AIK vs Sirius</td>
+<td class="loss">❌ LOST</td>
+</tr>
+
+</table>
+
+<div class="stats">
+
+<h2>Statistics</h2>
+
+<p>✔ Total Tips: 150</p>
+<p>🏆 Won: 75</p>
+<p>❌ Lost: 75</p>
+</div>
+
+</div>
+
+<script>
+const now = new Date();
+
+document.getElementById("lastUpdated").textContent =
+now.toLocaleDateString("en-GB", {
+  day: "2-digit",
+  month: "short",
+  year: "numeric"
+}) + " " +
+now.toLocaleTimeString("en-GB", {
+  hour: "2-digit",
+  minute: "2-digit"
+});
+</script>
+
+</body>
+</html>
