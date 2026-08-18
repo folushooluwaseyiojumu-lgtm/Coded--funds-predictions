@@ -199,3 +199,45 @@ nav a:hover {
     margin-bottom: 15px;
 }
 }
+.vip-section{
+    text-align:center;
+    padding:50px 20px;
+}
+
+.vip-section h1{
+    font-size:40px;
+    color:#0b4a8b;
+}
+
+.vip-card{
+    max-width:500px;
+    margin:30px auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+.vip-card h2{
+    color:#0b4a8b;
+}
+
+.vip-card h3{
+    color:green;
+    font-size:35px;
+}
+
+.vip-card ul{
+    text-align:left;
+    line-height:2;
+}
+
+.vip-card button{
+    background:#0b4a8b;
+    color:white;
+    border:none;
+    padding:15px 30px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:18px;
+}
