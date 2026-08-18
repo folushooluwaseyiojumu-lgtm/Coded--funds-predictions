@@ -1,43 +1,30 @@
-DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>VIP Predictions</title>
+<section class="vip-section">
 
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-</head>
+    <h1>🔥 CODED FUNDS VIP</h1>
 
-<body>
+    <p>
+        Get access to premium football predictions,
+        high-odds accumulators and expert analysis.
+    </p>
 
-<h1>VIP Predictions</h1>
+    <div class="vip-card">
 
-<div id="predictions">Loading predictions...</div>
+        <h2>VIP MEMBERSHIP</h2>
 
-<script>
-const firebaseConfig = {
-  apiKey: "AIzaSyCnrqISRt1-B7QmQah9i3f8-qj8bmLAQu8",
-  authDomain: "coded-funds-prediction.firebaseapp.com",
-  projectId: "coded-funds-prediction",
-  storageBucket: "coded-funds-prediction.firebasestorage.app",
-  messagingSenderId: "74680865102",
-  appId: "1:74680865102:web:957bb9e510a63ef7458e1f",
-  measurementId: "G-SM00C9DT3F"
-};
+        <h3>₦2,500 / Week</h3>
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+        <ul>
+            <li>✅ Daily VIP Predictions</li>
+            <li>✅ High Odds Tips</li>
+            <li>✅ Weekend Bankers</li>
+            <li>✅ Match Analysis</li>
+            <li>✅ Premium Support</li>
+        </ul>
 
-db.collection("vip").doc("today").onSnapshot((doc) => {
-    if (doc.exists) {
-        document.getElementById("predictions").innerHTML =
-            "<pre>" + doc.data().matches + "</pre>";
-    } else {
-        document.getElementById("predictions").innerHTML =
-            "No VIP predictions available.";
-    }
-});
-</script>
+        <button onclick="joinVIP()">
+            Join VIP Now
+        </button>
 
-</body>
-</html>
+    </div>
+
+</section>
