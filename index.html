@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,109 +10,206 @@
 <body>
 
 <header class="navbar">
-    <div class="logo">⚽ Coded Funds Prediction</div>
+
+    <div class="logo">
+        ⚽ Coded Funds Prediction
+    </div>
 
     <nav>
-        <a href="#home">🏠 Home</a>
+        <a href="#">🏠 Home</a>
         <a href="predictions.html">⚽ Free Tips</a>
-<a href="register.html">💎 VIP</a>
+        <a href="vip.html">💎 VIP</a>
         <a href="#contact">📞 Contact</a>
     </nav>
+
 </header>
 
-
 <section class="hero">
-    <h2>Welcome to Coded Funds Prediction</h2>
-    <p>Daily football predictions with accurate analysis.</p>
 
-    <a href="register.html" class="btn">🔥 Join VIP Now</a>
-</section>
+    <h2>⚽ CODED FUNDS PREDICTION</h2>
 
-<section class="countdown">
-    <h2>⏳ Next Match Countdown</h2>
+    <p>
+        Professional football analysis,
+        match insights and daily prediction updates.
+    </p>
 
-    <div class="countdown-box">
-        <h3>Manchester City vs Arsenal</h3>
-        <p id="timer"></p>
-    </div>
+    <a href="vip.html" class="btn">
+        🔥 Join VIP - ₦2,500/Week
+    </a>
+
 </section>
 
 <section class="card">
-    <h2>📅 Today's Free Tips</h2>
 
-    <section class="card">
+    <h2>📊 Our Statistics</h2>
+
+    <p>🏆 Predictions Won: 245+</p>
+    <p>⚽ Matches Analyzed: 500+</p>
+    <p>👥 VIP Members: 100+</p>
+    <p>📈 Success Rate: 85%</p>
+
+</section>
+
+<section class="card">
+
+    <h2>⭐ Why Choose Us?</h2>
+
+    <p>✅ Daily Prediction Updates</p>
+    <p>✅ Match Analysis</p>
+    <p>✅ Fast Results Updates</p>
+    <p>✅ VIP Access</p>
+    <p>✅ Mobile Friendly Platform</p>
+
+</section>
+
+<section class="countdown">
+
+    <h2>⏳ Next Match Countdown</h2>
+
+    <div class="countdown-box">
+
+        <h3>Manchester City vs Arsenal</h3>
+
+        <p id="timer"></p>
+
+    </div>
+
+</section>
+
+<section class="card">
+
     <h2>⚽ Live Matches</h2>
 
     <div class="match-card">
+
         <h3>Manchester United vs Chelsea</h3>
+
         <p>🔴 LIVE - 67'</p>
+
         <p><strong>Score:</strong> 2 - 1</p>
+
     </div>
 
     <div class="match-card">
+
         <h3>Barcelona vs Real Madrid</h3>
+
         <p>🕒 Starts in 2h 30m</p>
+
     </div>
 
     <div class="match-card">
-        <h3>Bayern Munich vs Dortmund</h3>
-        <p>🕒 Starts in 5h</p>
-    </div>
-</section>
-</section>
-<a href="VIP.html" class="btn">
-    🔥 Join VIP Now
 
-</a>
+        <h3>Bayern Munich vs Dortmund</h3>
+
+        <p>🕒 Starts in 5h</p>
+
+    </div>
+
+</section>
+
+<section class="card">
+
+    <h2>🏆 Recent Results</h2>
+
+    <div class="match-card">
+
+        <h3>Liverpool vs Everton</h3>
+
+        <p>Prediction: Over 2.5 Goals</p>
+
+        <p>Result: ✅ WON</p>
+
+    </div>
+
+    <div class="match-card">
+
+        <h3>PSG vs Marseille</h3>
+
+        <p>Prediction: Home Win</p>
+
+        <p>Result: ✅ WON</p>
+
+    </div>
+
+</section>
+
+<section id="contact" class="card">
+
+    <h2>📞 Contact Us</h2>
+
+    <p>WhatsApp: 0812309224</p>
+
+    <p>Email: support@codedfunds.com</p>
+
+    <p>Available 24/7</p>
+
+</section>
 
 <footer>
-    <p>© 2026 Coded Funds Prediction. All Rights Reserved.</p>
-    <p>WhatsApp: +234 812 309 224</p>
+
+    <p>
+        © 2026 Coded Funds Prediction.
+        All Rights Reserved.
+    </p>
+
 </footer>
 
 <script>
-const matchDate = new Date("July 5, 2026 18:00:00").getTime();
 
-const timer = setInterval(function () {
+const matchDate =
+new Date("December 31, 2026 18:00:00").getTime();
+
+const timer = setInterval(function(){
+
     const now = new Date().getTime();
+
     const distance = matchDate - now;
 
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    const days =
+    Math.floor(distance / (1000 * 60 * 60 * 24));
+
+    const hours =
+    Math.floor(
+        (distance %
+        (1000 * 60 * 60 * 24))
+        /
+        (1000 * 60 * 60)
+    );
+
+    const minutes =
+    Math.floor(
+        (distance %
+        (1000 * 60 * 60))
+        /
+        (1000 * 60)
+    );
+
+    const seconds =
+    Math.floor(
+        (distance %
+        (1000 * 60))
+        /
+        1000
+    );
 
     document.getElementById("timer").innerHTML =
-        days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+        days + "d " +
+        hours + "h " +
+        minutes + "m " +
+        seconds + "s";
 
-    if (distance < 0) {
+    if(distance < 0){
+
         clearInterval(timer);
-        document.getElementById("timer").innerHTML = "🔴 Match Started!";
+
+        document.getElementById("timer").innerHTML =
+            "🔴 Match Started!";
+
     }
-}, 1000);
-</script>    
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
 
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyCnrqISRt1-B7QmQah9i3f8-qj8bmLAQu8",
-    authDomain: "coded-funds-prediction.firebaseapp.com",
-    projectId: "coded-funds-prediction",
-    storageBucket: "coded-funds-prediction.firebasestorage.app",
-    messagingSenderId: "74680865102",
-    appId: "1:74680865102:web:957bb9e510a63ef7458e1f",
-    measurementId: "G-SM00C9DT3F"
-  };
+},1000);
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
 </script>
 
 </body>
