@@ -1,15 +1,43 @@
-<section class="vip-section">
 
+<section class="vip-section">
+<script type="module">
+
+import { auth } from "./firebase.js";
+
+import {
+    onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+onAuthStateChanged(
+    auth,
+    (user) => {
+
+        if (!user) {
+
+            alert(
+                "Please login first."
+            );
+
+            window.location.href =
+                "login.html";
+
+        }
+
+    }
+);
+
+</script>
     <h1>🔥 CODED FUNDS VIP</h1>
 
     <p>
-        Get access to premium football predictions,
-        high-odds accumulators and expert analysis.
+        Unlock premium football analysis,
+        match insights and exclusive VIP content.
     </p>
 
     <div class="vip-card">
 
-        <h2>VIP MEMBERSHIP</h2>
+        <h2>💎 VIP MEMBERSHIP</h2>
 
         <h3>₦2,500 / Week</h3>
 
@@ -19,12 +47,33 @@
             <li>✅ Weekend Bankers</li>
             <li>✅ Match Analysis</li>
             <li>✅ Premium Support</li>
+            <li>✅ Early Access Updates</li>
         </ul>
 
-        <button onclick="joinVIP()">
-            Join VIP Now
+        <button onclick="window.location.href='register.html'">
+            🚀 Join VIP Now
         </button>
 
     </div>
 
-</section>
+    <div class="vip-card">
+
+    <h2>🔒 VIP Preview</h2>
+
+    <div class="match-card">
+        <h3>Manchester City vs Arsenal</h3>
+
+        <p class="locked">
+            Prediction: ********
+        </p>
+
+        <p class="locked">
+            Odds: ****
+        </p>
+
+        <p>
+            Available only to VIP members.
+        </p>
+    </div>
+
+    </div>
