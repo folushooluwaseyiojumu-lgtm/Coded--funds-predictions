@@ -1,33 +1,27 @@
+VIP.html
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Coded Funds VIP</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
 
 <section class="vip-section">
-<script type="module">
 
-import { auth } from "./firebase.js";
+    <!-- VIP HEADER -->
 
-import {
-    onAuthStateChanged
-}
-from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
-
-onAuthStateChanged(
-    auth,
-    (user) => {
-
-        if (!user) {
-
-            alert(
-                "Please login first."
-            );
-
-            window.location.href =
-                "login.html";
-
-        }
-
-    }
-);
-
-</script>
     <h1>🔥 CODED FUNDS VIP</h1>
 
     <p>
@@ -35,43 +29,98 @@ onAuthStateChanged(
         match insights and exclusive VIP content.
     </p>
 
-    <a href="vip.html" class="btn">
-    🔥 Join VIP - ₦2,500/Week
-    </a>
+
+    <!-- VIP MEMBERSHIP CARD -->
+
+    <div class="vip-card">
+
+        <h2>💎 VIP MEMBERSHIP</h2>
+
+        <h3>₦2,500 / Week</h3>
 
         <ul>
+
             <li>✅ Daily VIP Predictions</li>
+
             <li>✅ High Odds Tips</li>
+
             <li>✅ Weekend Bankers</li>
+
             <li>✅ Match Analysis</li>
+
             <li>✅ Premium Support</li>
+
             <li>✅ Early Access Updates</li>
+
         </ul>
 
+
         <button onclick="window.location.href='register.html'">
+
             🚀 Join VIP Now
+
         </button>
 
     </div>
 
+
+    <!-- VIP PREVIEW -->
+
     <div class="vip-card">
 
-    <h2>🔒 VIP Preview</h2>
+        <h2>🔒 VIP Preview</h2>
 
-    <div class="match-card">
-        <h3>Manchester City vs Arsenal</h3>
+        <div class="match-card">
 
-        <p class="locked">
-            Prediction: ********
-        </p>
+            <h3>
+                Manchester City vs Arsenal
+            </h3>
 
-        <p class="locked">
-            Odds: ****
-        </p>
+            <p class="locked">
+                Prediction: ********
+            </p>
 
-        <p>
-            Available only to VIP members.
-        </p>
+            <p class="locked">
+                Odds: ****
+            </p>
+
+            <p>
+                Available only to VIP members.
+            </p>
+
+        </div>
+
     </div>
 
-    </div>
+</section>
+
+
+<!-- FIREBASE VIP LOGIN PROTECTION -->
+
+<script type="module">
+
+import { auth } from "./firebase.js";
+
+import {
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+
+onAuthStateChanged(auth, (user) => {
+
+    if (!user) {
+
+        alert("Please login first.");
+
+        window.location.href = "login.html";
+
+    }
+
+});
+
+</script>
+
+
+</body>
+
+</html>
