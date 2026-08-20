@@ -1,243 +1,461 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
+
+/* =========================================
+   CODED FUNDS PREDICTION
+   COMPLETE WEBSITE STYLES
+========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-body{
-    background:#111;
-    color:#fff;
+html {
+    scroll-behavior: smooth;
 }
 
-header{
-    background:#0d6efd;
-    text-align:center;
-    padding:30px 20px;
+body {
+    background: #0d1117;
+    color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
 }
 
-header h1{
-    font-size:50px;
-}
+/* =========================================
+   NAVBAR
+========================================= */
 
-header p{
-    font-size:22px;
-    margin-top:10px;
-}
-
-nav{
-    background:#222;
-    text-align:center;
-    padding:15px;
-}
-
-nav a{
-    color:white;
-    text-decoration:none;
-    margin:0 15px;
-    font-weight:bold;
-}
-
-.hero{
-    text-align:center;
-    padding:40px 20px;
-}
-
-.btn{
-    display:inline-block;
-    margin-top:20px;
-    background:#28a745;
-    color:white;
-    padding:15px 30px;
-    text-decoration:none;
-    border-radius:8px;
-    font-size:20px;
-}
-
-.section{
-    padding:20px;
-}
-
-.card{
-    background:#222;
-    padding:20px;
-    border-radius:12px;
-    margin-bottom:20px;
-}
-
-.card h3{
-    margin-bottom:15px;
-}
-
-footer{
-    background:#000;
-    text-align:center;
-    padding:20px;
-    margin-top:30px;
-}
-
-.countdown{
-    background:#222;
-    color:white;
-    margin:20px;
-    padding:20px;
-    border-radius:12px;
-    text-align:center;
-}
-
-.countdown-box{
-    background:#333;
-    padding:15px;
-    border-radius:10px;
-    margin-top:10px;
-}
-
-#timer{
-    font-size:28px;
-    font-weight:bold;
-    color:#00ff66;
-    margin-top:10px;
-}.navbar {
-    background: #1f1f1f;
-    padding: 15px;
+.navbar {
+    background: #161b22;
+    padding: 18px 15px;
     text-align: center;
     border-bottom: 2px solid #28a745;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 .logo {
     color: #28a745;
-    font-size: 24px;
+    font-size: 25px;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 nav {
     display: flex;
     justify-content: center;
-    gap: 15px;
+    align-items: center;
+    gap: 10px;
     flex-wrap: wrap;
 }
 
 nav a {
-    color: white;
+    color: #ffffff;
     text-decoration: none;
     font-weight: bold;
-    padding: 8px 12px;
-    border-radius: 5px;
+    padding: 9px 13px;
+    border-radius: 7px;
     transition: 0.3s;
 }
 
 nav a:hover {
     background: #28a745;
-}.navbar {
-    background: #1f1f1f;
-    padding: 15px;
+    color: #ffffff;
+}
+
+/* =========================================
+   HERO
+========================================= */
+
+.hero {
     text-align: center;
-    border-bottom: 2px solid #28a745;
+    padding: 55px 20px;
+    background:
+        linear-gradient(
+            rgba(13, 17, 23, 0.9),
+            rgba(13, 17, 23, 0.95)
+        );
 }
 
-.logo {
-    color: #28a745;
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-nav {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    flex-wrap: wrap;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    padding: 8px 12px;
-    border-radius: 5px;
-    transition: 0.3s;
-}.navbar {
-    background: #1f1f1f;
-    padding: 15px;
-    text-align: center;
-    border-bottom: 2px solid #28a745;
-}
-
-.logo {
-    color: #28a745;
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-nav {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    flex-wrap: wrap;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    padding: 8px 12px;
-    border-radius: 5px;
-    transition: 0.3s;
-}
-
-nav a:hover {
-    background: #28a745;
-}
-
-.last-updated {
-    color: #bdbdbd;
-    font-size: 14px;
-    text-align: center;
-    margin-top: 8px;
+.hero h1,
+.hero h2 {
+    color: #ffffff;
+    font-size: 38px;
     margin-bottom: 15px;
 }
-}
-.vip-section{
-    text-align:center;
-    padding:50px 20px;
+
+.hero p {
+    max-width: 700px;
+    margin: auto;
+    color: #d1d5db;
+    font-size: 19px;
 }
 
-.vip-section h1{
-    font-size:40px;
-    color:#0b4a8b;
+/* =========================================
+   BUTTONS
+========================================= */
+
+.btn {
+    display: inline-block;
+    margin-top: 25px;
+    background: #28a745;
+    color: #ffffff;
+    padding: 14px 28px;
+    text-decoration: none;
+    border-radius: 9px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: 0.3s;
 }
 
-.vip-card{
-    max-width:500px;
-    margin:30px auto;
-    background:white;
-    padding:30px;
-    border-radius:15px;
-    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+.btn:hover {
+    background: #20c997;
+    transform: translateY(-2px);
 }
 
-.vip-card h2{
-    color:#0b4a8b;
+/* =========================================
+   GENERAL CARDS
+========================================= */
+
+.card {
+    max-width: 900px;
+    margin: 25px auto;
+    padding: 25px;
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 15px;
 }
 
-.vip-card h3{
-    color:green;
-    font-size:35px;
+.card h2 {
+    color: #28a745;
+    margin-bottom: 18px;
 }
 
-.vip-card ul{
-    text-align:left;
-    line-height:2;
+.card p {
+    margin: 8px 0;
+    color: #d1d5db;
 }
 
-.vip-card button{
-    background:#0b4a8b;
-    color:white;
-    border:none;
-    padding:15px 30px;
-    border-radius:8px;
-    cursor:pointer;
-    font-size:18px;
+/* =========================================
+   MATCH CARDS
+========================================= */
+
+.match-card {
+    background: #21262d;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 18px;
+    margin-top: 15px;
 }
+
+.match-card h3 {
+    color: #ffffff;
+    margin-bottom: 8px;
+}
+
+.match-card p {
+    color: #d1d5db;
+}
+
+/* =========================================
+   COUNTDOWN
+========================================= */
+
+.countdown {
+    max-width: 900px;
+    margin: 25px auto;
+    padding: 25px;
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.countdown h2 {
+    color: #ffffff;
+}
+
+.countdown-box {
+    background: #21262d;
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 15px;
+}
+
+.countdown-box h3 {
+    color: #ffffff;
+}
+
+#timer {
+    color: #00ff66;
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* =========================================
+   VIP SECTION
+========================================= */
+
+.vip-section {
+    max-width: 900px;
+    margin: auto;
+    padding: 45px 20px;
+    text-align: center;
+}
+
+.vip-section h1 {
+    color: #ffd700;
+    font-size: 42px;
+    margin-bottom: 15px;
+    text-shadow: 0 0 12px rgba(255, 215, 0, 0.3);
+}
+
+.vip-section > p {
+    max-width: 700px;
+    margin: 0 auto 25px;
+    color: #d1d5db;
+    font-size: 19px;
+}
+
+/* =========================================
+   VIP CARDS
+========================================= */
+
+.vip-card {
+    background: #161b22;
+    border: 2px solid #ffd700;
+    border-radius: 20px;
+    padding: 30px;
+    margin: 30px auto;
+    max-width: 600px;
+    box-shadow:
+        0 0 20px rgba(255, 215, 0, 0.12);
+}
+
+.vip-card h2 {
+    color: #ffd700;
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.vip-card h3 {
+    color: #00ff66;
+    font-size: 38px;
+    margin: 15px 0 25px;
+}
+
+/* =========================================
+   VIP BENEFITS
+========================================= */
+
+.vip-card ul {
+    list-style: none;
+    text-align: left;
+    max-width: 420px;
+    margin: 0 auto 25px;
+    padding: 0;
+}
+
+.vip-card li {
+    background: #21262d;
+    margin: 8px 0;
+    padding: 10px 14px;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 17px;
+}
+
+/* =========================================
+   VIP BUTTON
+========================================= */
+
+.vip-card button {
+    width: auto;
+    min-width: 220px;
+    padding: 14px 25px;
+    background: #ffd700;
+    color: #000000;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.vip-card button:hover {
+    background: #ffea70;
+    transform: scale(1.04);
+}
+
+/* =========================================
+   VIP PREVIEW
+========================================= */
+
+.vip-card .match-card {
+    text-align: left;
+}
+
+.vip-card .match-card h3 {
+    color: #ffffff;
+    font-size: 21px;
+}
+
+.locked {
+    color: #ff4d4d !important;
+    font-weight: bold;
+}
+
+.vip-card p {
+    color: #d1d5db;
+}
+
+/* =========================================
+   CONTACT
+========================================= */
+
+#contact {
+    text-align: center;
+}
+
+#contact p {
+    margin: 10px 0;
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+footer {
+    background: #080a0d;
+    text-align: center;
+    padding: 25px 15px;
+    margin-top: 40px;
+    border-top: 1px solid #30363d;
+}
+
+footer p {
+    color: #9ca3af;
+    font-size: 14px;
+}
+
+/* =========================================
+   LAST UPDATED
+========================================= */
+
+.last-updated {
+    color: #9ca3af;
+    font-size: 14px;
+    text-align: center;
+    margin: 10px 0 15px;
+}
+
+/* =========================================
+   MOBILE RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+
+    .navbar {
+        padding: 15px 10px;
+    }
+
+    .logo {
+        font-size: 21px;
+    }
+
+    nav {
+        gap: 5px;
+    }
+
+    nav a {
+        font-size: 14px;
+        padding: 8px 9px;
+    }
+
+    .hero {
+        padding: 40px 15px;
+    }
+
+    .hero h1,
+    .hero h2 {
+        font-size: 30px;
+    }
+
+    .hero p {
+        font-size: 17px;
+    }
+
+    .card,
+    .countdown {
+        margin: 18px 12px;
+        padding: 20px 15px;
+    }
+
+    .vip-section {
+        padding: 35px 12px;
+    }
+
+    .vip-section h1 {
+        font-size: 31px;
+    }
+
+    .vip-section > p {
+        font-size: 17px;
+    }
+
+    .vip-card {
+        padding: 22px 15px;
+        margin: 22px auto;
+    }
+
+    .vip-card h2 {
+        font-size: 24px;
+    }
+
+    .vip-card h3 {
+        font-size: 30px;
+    }
+
+    .vip-card li {
+        font-size: 15px;
+    }
+
+    .vip-card button {
+        width: 100%;
+    }
+
+    #timer {
+        font-size: 22px;
+    }
+}
+
+/* =========================================
+   SMALL PHONES
+========================================= */
+
+@media (max-width: 400px) {
+
+    .logo {
+        font-size: 19px;
+    }
+
+    nav a {
+        font-size: 13px;
+    }
+
+    .hero h1,
+    .hero h2 {
+        font-size: 26px;
+    }
+
+    .vip-section h1 {
+        font-size: 27px;
+    }
+
+    .vip-card h3 {
+        font-size: 27px;
+    }
+    }
