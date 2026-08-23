@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +8,7 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Coded Funds VIP</title>
+    <title>Coded Funds Members</title>
 
     <link rel="stylesheet" href="style.css">
 
@@ -20,55 +18,39 @@
 
 <section class="vip-section">
 
-    <!-- VIP HEADER -->
+    <!-- HEADER -->
 
-    <h1>🔥 CODED FUNDS VIP</h1>
+    <h1>🔥 CODED FUNDS MEMBERS</h1>
 
-    <p>
-        Unlock premium football analysis,
-        match insights and exclusive VIP content.
+    <p id="userEmail">
+        Checking your account...
     </p>
 
 
-    <!-- VIP MEMBERSHIP CARD -->
+    <!-- MEMBERSHIP -->
 
     <div class="vip-card">
 
-        <h2>💎 VIP MEMBERSHIP</h2>
+        <h2>💎 Membership</h2>
 
-        <h3>₦2,500 / Week</h3>
+        <h3>Active Account</h3>
 
-        <ul>
+        <p>
+            Welcome to the Coded Funds members area.
+        </p>
 
-            <li>✅ Daily VIP Predictions</li>
-
-            <li>✅ High Odds Tips</li>
-
-            <li>✅ Weekend Bankers</li>
-
-            <li>✅ Match Analysis</li>
-
-            <li>✅ Premium Support</li>
-
-            <li>✅ Early Access Updates</li>
-
-        </ul>
-
-
-        <button onclick="window.location.href='register.html'">
-
-            🚀 Join VIP Now
-
-        </button>
+        <p>
+            You are successfully signed in.
+        </p>
 
     </div>
 
 
-    <!-- VIP PREVIEW -->
+    <!-- FOOTBALL ANALYSIS -->
 
     <div class="vip-card">
 
-        <h2>🔒 VIP Preview</h2>
+        <h2>⚽ Premium Football Analysis</h2>
 
         <div class="match-card">
 
@@ -76,33 +58,58 @@
                 Manchester City vs Arsenal
             </h3>
 
-            <p class="locked">
-                Prediction: ********
-            </p>
-
-            <p class="locked">
-                Odds: ****
+            <p>
+                📊 Detailed match analysis
             </p>
 
             <p>
-                Available only to VIP members.
+                📰 Team news and match insights
+            </p>
+
+            <p>
+                📈 Statistical breakdown
             </p>
 
         </div>
 
     </div>
 
+
+    <!-- NAVIGATION -->
+
+    <div class="vip-card">
+
+        <h2>👤 Account</h2>
+
+        <button
+            onclick="window.location.href='dashboard.html'">
+
+            ⬅️ Back to Dashboard
+
+        </button>
+
+        <br><br>
+
+        <button id="logoutBtn">
+
+            🚪 Logout
+
+        </button>
+
+    </div>
+
 </section>
 
 
-<!-- FIREBASE VIP LOGIN PROTECTION -->
+<!-- FIREBASE AUTHENTICATION -->
 
 <script type="module">
 
 import { auth } from "./firebase.js";
 
 import {
-    onAuthStateChanged
+    onAuthStateChanged,
+    signOut
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 
@@ -114,9 +121,35 @@ onAuthStateChanged(auth, (user) => {
 
         window.location.href = "login.html";
 
+        return;
+
     }
 
+    document.getElementById("userEmail").textContent =
+        "👤 Logged in as: " + user.email;
+
 });
+
+
+/* LOGOUT */
+
+document
+    .getElementById("logoutBtn")
+    .addEventListener("click", async () => {
+
+        try {
+
+            await signOut(auth);
+
+            window.location.href = "login.html";
+
+        } catch (error) {
+
+            alert(error.message);
+
+        }
+
+    });
 
 </script>
 
