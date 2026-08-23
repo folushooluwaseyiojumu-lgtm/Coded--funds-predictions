@@ -1,1 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Coded Funds Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<section class="vip-section">
+
+    <h1>👑 My Dashboard</h1>
+
+    <p id="userEmail">
+        Loading account...
+    </p>
+
+    <div class="vip-card">
+
+        <h2>💎 Membership</h2>
+
+        <h3>Not Active</h3>
+
+        <p>
+            Your account is currently registered,
+            but no active membership is attached.
+        </p>
+
+        <button onclick="window.location.href='VIP.html'">
+            View Members Area
+        </button>
+
+    </div>
+
+    <div class="vip-card">
+
+        <h2>📊 Account</h2>
+
+        <p>
+            You are successfully signed in.
+        </p>
+
+        <button id="logoutBtn">
+            🚪 Logout
+        </button>
+
+    </div>
+
+</section>
+
+<script type="module">
+
+import { auth } from "./firebase.js";
+
+import {
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+
+onAuthStateChanged(auth, (user) => {
+
+    if (!user) {
+
+        window.location.href = "login.html";
+
+        return;
+
+    }
+
+    document.getElementById("userEmail").textContent =
+        "Logged in as: " + user.email;
+
+});
+
+
+document.getElementById("logoutBtn").addEventListener(
+    "click",
+    async () => {
+
+        await signOut(auth);
+
+        window.location.href = "login.html";
+
+    }
+);
+
+</script>
+
+</body>
+
+</html>
