@@ -167,19 +167,26 @@
 </footer>
 
 
-<script type="module">
+<<script type="module">
 
-import { auth } from "./firebase.js";
+import { auth, db } from "./firebase.js";
 
 import {
     onAuthStateChanged,
     signOut
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
+import {
+    doc,
+    getDoc
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-/* CHECK LOGIN */
 
-onAuthStateChanged(auth, (user) => {
+const statusElement =
+    document.querySelector(".status");
+
+
+onAuthStateChanged(auth, async (user) => {
 
     if (!user) {
 
@@ -197,6 +204,78 @@ onAuthStateChanged(auth, (user) => {
 
     document.getElementById("accountEmail").textContent =
         "📧 " + user.email;
+
+
+    /* GET MEMBERSHIP STATUS FROM FIRESTORE */
+
+    try {
+
+        const userRef =
+            doc(db, "users", user.uid);
+
+        const userSnap =
+            await getDoc(userRef);
+
+
+        if (!userSnap.exists()) {
+
+            statusElement.textContent =
+                "NOT ACTIVE";
+
+            return;
+
+        }
+
+
+        const userData =
+            userSnap.data();
+
+        const membershipStatus =
+            userData.membershipStatus || "not_active";
+
+
+        if (membershipStatus === "active") {
+
+            statusElement.textContent =
+                "ACTIVE";
+
+            statusElement.style.color =
+                "#00ff66";
+
+        }
+
+        else if (membershipStatus === "pending") {
+
+            statusElement.textContent =
+                "PENDING";
+
+            statusElement.style.color =
+                "#ffd700";
+
+        }
+
+        else {
+
+            statusElement.textContent =
+                "NOT ACTIVE";
+
+            statusElement.style.color =
+                "#ff4444";
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Firestore error:",
+            error
+        );
+
+        statusElement.textContent =
+            "NOT ACTIVE";
+
+    }
 
 });
 
@@ -223,7 +302,6 @@ document
     });
 
 </script>
-
 
 </body>
 
