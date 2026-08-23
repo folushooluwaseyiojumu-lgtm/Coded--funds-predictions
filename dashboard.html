@@ -1,3 +1,5 @@
+dashboard.html
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,46 +18,154 @@
 
 <body>
 
-<section class="vip-section">
+<header class="navbar">
 
-    <h1>👑 My Dashboard</h1>
+    <div class="logo">
+        ⚽ Coded Funds
+    </div>
 
-    <p id="userEmail">
-        Loading account...
+    <nav>
+
+        <a href="index.html">
+            🏠 Home
+        </a>
+
+        <a href="VIP.html">
+            💎 VIP
+        </a>
+
+        <a href="dashboard.html">
+            👤 Dashboard
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main class="dashboard">
+
+    <div class="dashboard-header">
+
+        <h1>
+            👑 Welcome to Your Dashboard
+        </h1>
+
+        <p id="userEmail">
+            Loading account...
+        </p>
+
+    </div>
+
+
+    <!-- MEMBERSHIP -->
+
+    <div class="dashboard-card">
+
+        <div class="dashboard-icon">
+            💎
+        </div>
+
+        <h2>
+            Membership Status
+        </h2>
+
+        <div class="status">
+            NOT ACTIVE
+        </div>
+
+        <p>
+            Your account has been created successfully.
+            Your membership is currently inactive.
+        </p>
+
+        <button
+            onclick="window.location.href='VIP.html'">
+
+            💎 View Membership
+
+        </button>
+
+    </div>
+
+
+    <!-- ACCOUNT -->
+
+    <div class="dashboard-card">
+
+        <div class="dashboard-icon">
+            👤
+        </div>
+
+        <h2>
+            Account Information
+        </h2>
+
+        <p id="accountEmail">
+            Loading...
+        </p>
+
+        <p>
+            🔐 Account secured with Firebase
+        </p>
+
+    </div>
+
+
+    <!-- MEMBERS AREA -->
+
+    <div class="dashboard-card">
+
+        <div class="dashboard-icon">
+            🔒
+        </div>
+
+        <h2>
+            Members Area
+        </h2>
+
+        <p>
+            Access your available member content
+            from the VIP section.
+        </p>
+
+        <button
+            onclick="window.location.href='VIP.html'">
+
+            🚀 Open Members Area
+
+        </button>
+
+    </div>
+
+
+    <!-- LOGOUT -->
+
+    <div class="dashboard-card logout-card">
+
+        <h2>
+            🚪 Account
+        </h2>
+
+        <button id="logoutBtn" class="logout-btn">
+
+            Logout
+
+        </button>
+
+    </div>
+
+</main>
+
+
+<footer>
+
+    <p>
+        © 2026 Coded Funds. All Rights Reserved.
     </p>
 
-    <div class="vip-card">
+</footer>
 
-        <h2>💎 Membership</h2>
-
-        <h3>Not Active</h3>
-
-        <p>
-            Your account is currently registered,
-            but no active membership is attached.
-        </p>
-
-        <button onclick="window.location.href='VIP.html'">
-            View Members Area
-        </button>
-
-    </div>
-
-    <div class="vip-card">
-
-        <h2>📊 Account</h2>
-
-        <p>
-            You are successfully signed in.
-        </p>
-
-        <button id="logoutBtn">
-            🚪 Logout
-        </button>
-
-    </div>
-
-</section>
 
 <script type="module">
 
@@ -67,6 +177,8 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 
+/* CHECK LOGIN */
+
 onAuthStateChanged(auth, (user) => {
 
     if (!user) {
@@ -77,22 +189,38 @@ onAuthStateChanged(auth, (user) => {
 
     }
 
+
+    /* DISPLAY USER EMAIL */
+
     document.getElementById("userEmail").textContent =
         "Logged in as: " + user.email;
+
+    document.getElementById("accountEmail").textContent =
+        "📧 " + user.email;
 
 });
 
 
-document.getElementById("logoutBtn").addEventListener(
-    "click",
-    async () => {
+/* LOGOUT */
 
-        await signOut(auth);
+document
+    .getElementById("logoutBtn")
+    .addEventListener("click", async () => {
 
-        window.location.href = "login.html";
+        try {
 
-    }
-);
+            await signOut(auth);
+
+            window.location.href =
+                "login.html";
+
+        } catch (error) {
+
+            alert(error.message);
+
+        }
+
+    });
 
 </script>
 
