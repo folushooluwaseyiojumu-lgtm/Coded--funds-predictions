@@ -16,11 +16,15 @@
 
 <body>
 
+
 <section class="vip-section">
+
 
     <!-- HEADER -->
 
-    <h1>🔥 CODED FUNDS MEMBERS</h1>
+    <h1>
+        🔥 CODED FUNDS MEMBERS
+    </h1>
 
     <p id="userEmail">
         Checking your account...
@@ -31,26 +35,40 @@
 
     <div class="vip-card">
 
-        <h2>💎 Membership</h2>
+        <h2>
+            💎 VIP MEMBERSHIP
+        </h2>
 
-        <h3>Active Account</h3>
+        <h3>
+            ₦2,500 / Week
+        </h3>
 
         <p>
-            Welcome to the Coded Funds members area.
+            Subscribe to access premium
+            football analysis and exclusive
+            members content.
         </p>
 
-        <p>
-            You are successfully signed in.
-        </p>
+
+        <!-- WHATSAPP SUBSCRIBE -->
+
+        <button
+            onclick="contactWhatsApp()">
+
+            📲 Subscribe via WhatsApp
+
+        </button>
 
     </div>
 
 
-    <!-- FOOTBALL ANALYSIS -->
+    <!-- PREMIUM FOOTBALL ANALYSIS -->
 
     <div class="vip-card">
 
-        <h2>⚽ Premium Football Analysis</h2>
+        <h2>
+            ⚽ Premium Football Analysis
+        </h2>
 
         <div class="match-card">
 
@@ -75,11 +93,14 @@
     </div>
 
 
-    <!-- NAVIGATION -->
+    <!-- ACCOUNT -->
 
     <div class="vip-card">
 
-        <h2>👤 Account</h2>
+        <h2>
+            👤 Account
+        </h2>
+
 
         <button
             onclick="window.location.href='dashboard.html'">
@@ -88,7 +109,10 @@
 
         </button>
 
-        <br><br>
+
+        <br>
+        <br>
+
 
         <button id="logoutBtn">
 
@@ -98,7 +122,9 @@
 
     </div>
 
+
 </section>
+
 
 
 <!-- FIREBASE AUTHENTICATION -->
@@ -113,17 +139,23 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 
+/* CHECK LOGIN */
+
 onAuthStateChanged(auth, (user) => {
 
     if (!user) {
 
         alert("Please login first.");
 
-        window.location.href = "login.html";
+        window.location.href =
+            "login.html";
 
         return;
 
     }
+
+
+    /* DISPLAY EMAIL */
 
     document.getElementById("userEmail").textContent =
         "👤 Logged in as: " + user.email;
@@ -141,7 +173,8 @@ document
 
             await signOut(auth);
 
-            window.location.href = "login.html";
+            window.location.href =
+                "login.html";
 
         } catch (error) {
 
@@ -150,6 +183,39 @@ document
         }
 
     });
+
+</script>
+
+
+
+<!-- WHATSAPP -->
+
+<script>
+
+function contactWhatsApp() {
+
+    const phone =
+        "234812309224";
+
+
+    const message =
+        "Hello Coded Funds 👋%0A%0A" +
+        "I would like to subscribe to your VIP membership.%0A" +
+        "Please send me the subscription details " +
+        "and access information.";
+
+
+    const whatsappURL =
+        "https://wa.me/" +
+        phone +
+        "?text=" +
+        message;
+
+
+    window.location.href =
+        whatsappURL;
+
+}
 
 </script>
 
