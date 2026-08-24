@@ -526,3 +526,315 @@ document
         }
 
     });
+// ==========================================
+// FREE TIPS MANAGER
+// ==========================================
+
+document
+    .getElementById("addTipBtn")
+    .addEventListener("click", async () => {
+
+        const home =
+            document.getElementById("tipHome")
+                .value.trim();
+
+        const away =
+            document.getElementById("tipAway")
+                .value.trim();
+
+        const prediction =
+            document.getElementById("tipPrediction")
+                .value.trim();
+
+        const odds =
+            document.getElementById("tipOdds")
+                .value.trim();
+
+        const date =
+            document.getElementById("tipDate")
+                .value;
+
+        const status =
+            document.getElementById("tipStatus")
+                .value;
+
+
+        if (
+            !home ||
+            !away ||
+            !prediction ||
+            !odds ||
+            !date
+        ) {
+
+            alert(
+                "Please fill in all free tip fields."
+            );
+
+            return;
+        }
+
+
+        try {
+
+            await addDoc(
+                collection(db, "freeTips"),
+                {
+
+                    home: home,
+
+                    away: away,
+
+                    prediction: prediction,
+
+                    odds: odds,
+
+                    date: date,
+
+                    status: status,
+
+                    createdAt:
+                        serverTimestamp()
+
+                }
+            );
+
+
+            alert(
+                "✅ Free tip published successfully!"
+            );
+
+
+            document.getElementById(
+                "tipHome"
+            ).value = "";
+
+            document.getElementById(
+                "tipAway"
+            ).value = "";
+
+            document.getElementById(
+                "tipPrediction"
+            ).value = "";
+
+            document.getElementById(
+                "tipOdds"
+            ).value = "";
+
+            document.getElementById(
+                "tipDate"
+            ).value = "";
+
+
+            loadFreeTips();
+
+
+        } catch (error) {
+
+            console.error(
+                "Free tip error:",
+                error
+            );
+
+            alert(
+                "❌ Could not publish tip:\n" +
+                error.message
+            );
+
+        }
+
+    });
+
+
+// ==========================================
+// LOAD FREE TIPS
+// ==========================================
+
+async function loadFreeTips() {
+
+    const list =
+        document.getElementById(
+            "tipsList"
+        );
+
+
+    try {
+
+        const snapshot =
+            await getDocs(
+                collection(
+                    db,
+                    "freeTips"
+                )
+            );
+
+
+        list.innerHTML = "";
+
+
+        if (snapshot.empty) {
+
+            list.innerHTML =
+                "<p>No free tips published yet.</p>";
+
+            return;
+        }
+
+
+        snapshot.forEach(
+            (tipDoc) => {
+
+                const data =
+                    tipDoc.data();
+
+
+                const card =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                card.className =
+                    "match-card";
+
+
+                card.innerHTML = `
+
+                    <h3>
+                        ${data.home}
+                        vs
+                        ${data.away}
+                    </h3>
+
+                    <p>
+                        🎯 Prediction:
+                        ${data.prediction}
+                    </p>
+
+                    <p>
+                        📈 Odds:
+                        ${data.odds}
+                    </p>
+
+                    <p>
+                        📅 Date:
+                        ${data.date}
+                    </p>
+
+                    <p>
+                        Status:
+                        ${data.status}
+                    </p>
+
+                    <button
+                        class="delete-tip"
+                        data-id="${tipDoc.id}">
+
+                        🗑️ Delete
+
+                    </button>
+
+                `;
+
+
+                list.appendChild(
+                    card
+                );
+
+            }
+        );
+
+
+        document
+            .querySelectorAll(
+                ".delete-tip"
+            )
+            .forEach(
+                (button) => {
+
+                    button.addEventListener(
+                        "click",
+                        () => {
+
+                            deleteFreeTip(
+                                button.dataset.id
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+
+    } catch (error) {
+
+        console.error(
+            "Load tips error:",
+            error
+        );
+
+        list.innerHTML =
+            "<p>Unable to load free tips.</p>";
+
+    }
+
+}
+
+
+// ==========================================
+// DELETE FREE TIP
+// ==========================================
+
+async function deleteFreeTip(id) {
+
+    if (
+        !confirm(
+            "Delete this free tip?"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    try {
+
+        await deleteDoc(
+            doc(
+                db,
+                "freeTips",
+                id
+            )
+        );
+
+
+        alert(
+            "✅ Free tip deleted."
+        );
+
+
+        loadFreeTips();
+
+
+    } catch (error) {
+
+        console.error(
+            "Delete tip error:",
+            error
+        );
+
+        alert(
+            "❌ Could not delete tip:\n" +
+            error.message
+        );
+
+    }
+
+}
+
+
+// Load tips when admin opens
+
+loadFreeTips();
