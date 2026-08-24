@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Coded Funds Admin Panel</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="logo">
+        ⚽ Coded Funds Admin
+    </div>
+
+    <nav>
+
+        <a href="index.html">
+            🏠 Home
+        </a>
+
+        <a href="admin.html">
+            ⚙️ Admin
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main class="admin-container">
+
+    <div class="admin-header">
+
+        <h1>
+            ⚙️ Admin Dashboard
+        </h1>
+
+        <p>
+            Manage your football content from one place.
+        </p>
+
+    </div>
+
+
+    <!-- UPCOMING MATCH -->
+
+    <section class="admin-card">
+
+        <h2>
+            ⏳ Next Match Countdown
+        </h2>
+
+        <label>
+            Home Team
+        </label>
+
+        <input
+            type="text"
+            id="homeTeam"
+            placeholder="Example: Arsenal"
+        >
+
+
+        <label>
+            Away Team
+        </label>
+
+        <input
+            type="text"
+            id="awayTeam"
+            placeholder="Example: Chelsea"
+        >
+
+
+        <label>
+            Match Date & Time
+        </label>
+
+        <input
+            type="datetime-local"
+            id="matchDate"
+        >
+
+
+        <button id="saveCountdownBtn">
+            💾 Save Countdown
+        </button>
+
+    </section>
+
+
+
+    <!-- ADD MATCH -->
+
+    <section class="admin-card">
+
+        <h2>
+            ⚽ Add Match
+        </h2>
+
+        <label>
+            Home Team
+        </label>
+
+        <input
+            type="text"
+            id="matchHome"
+            placeholder="Example: Liverpool"
+        >
+
+
+        <label>
+            Away Team
+        </label>
+
+        <input
+            type="text"
+            id="matchAway"
+            placeholder="Example: Everton"
+        >
+
+
+        <label>
+            Match Status
+        </label>
+
+        <select id="matchStatus">
+
+            <option value="upcoming">
+                🕒 Upcoming
+            </option>
+
+            <option value="live">
+                🔴 Live
+            </option>
+
+            <option value="finished">
+                🏁 Finished
+            </option>
+
+        </select>
+
+
+        <label>
+            Match Time
+        </label>
+
+        <input
+            type="text"
+            id="matchTime"
+            placeholder="Example: 20:00"
+        >
+
+
+        <label>
+            Score
+        </label>
+
+        <input
+            type="text"
+            id="matchScore"
+            placeholder="Example: 2 - 1"
+        >
+
+
+        <button id="addMatchBtn">
+            ➕ Add Match
+        </button>
+
+    </section>
+
+
+
+    <!-- RECENT RESULT -->
+
+    <section class="admin-card">
+
+        <h2>
+            🏆 Add Match Result
+        </h2>
+
+        <label>
+            Home Team
+        </label>
+
+        <input
+            type="text"
+            id="resultHome"
+            placeholder="Example: Liverpool"
+        >
+
+
+        <label>
+            Away Team
+        </label>
+
+        <input
+            type="text"
+            id="resultAway"
+            placeholder="Example: Everton"
+        >
+
+
+        <label>
+            Final Score
+        </label>
+
+        <input
+            type="text"
+            id="resultScore"
+            placeholder="Example: 3 - 1"
+        >
+
+
+        <label>
+            Match Information
+        </label>
+
+        <input
+            type="text"
+            id="resultInfo"
+            placeholder="Example: Match completed"
+        >
+
+
+        <button id="addResultBtn">
+            🏆 Add Result
+        </button>
+
+    </section>
+
+
+
+    <!-- CURRENT CONTENT -->
+
+    <section class="admin-card">
+
+        <h2>
+            📋 Current Matches
+        </h2>
+
+        <div id="matchesList">
+
+            <p>
+                Loading matches...
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- LOGOUT -->
+
+    <section class="admin-card">
+
+        <button
+            id="logoutBtn"
+            class="logout-btn">
+
+            🚪 Logout
+
+        </button>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <p>
+        © 2026 Coded Funds. All Rights Reserved.
+    </p>
+
+</footer>
+
+
+<script type="module" src="admin.js"></script>
+
+</body>
+
+          </html>
