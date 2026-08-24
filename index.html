@@ -231,28 +231,38 @@ const timer = setInterval(function() {
 
 }, 1000);
 
-
 // ===============================
 // ADMIN ACCESS
 // ===============================
 
-const ADMIN_EMAIL =
-    "folushooluwaseyiojumu@gmail.com";
-
+const ADMIN_EMAIL = "folushooluwaseyiojumu@gmail.com";
 
 onAuthStateChanged(auth, (user) => {
 
-    console.log("Logged-in user:", user);
+    if (user) {
 
-    if (user && user.email === ADMIN_EMAIL) {
+        console.log("Logged in email:", user.email);
 
-        document.getElementById("adminAccess").style.display =
-            "block";
+        if (
+            user.email &&
+            user.email.toLowerCase() ===
+            ADMIN_EMAIL.toLowerCase()
+        ) {
+
+            document.getElementById("adminAccess").style.display =
+                "block";
+
+            console.log("ADMIN ACCESS GRANTED");
+
+        } else {
+
+            console.log("This account is not the admin.");
+
+        }
 
     } else {
 
-        document.getElementById("adminAccess").style.display =
-            "none";
+        console.log("Nobody is logged in.");
 
     }
 
