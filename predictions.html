@@ -1,109 +1,251 @@
->
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Daily Predictions</title>
 
-<style>
-body{
-    margin:0;
-    background:#0d1117;
-    color:white;
-    font-family:Arial,sans-serif;
-}
+    <meta charset="UTF-8">
 
-header{
-    background:#16a34a;
-    text-align:center;
-    padding:18px;
-    font-size:28px;
-    font-weight:bold;
-}
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-.container{
-    max-width:900px;
-    margin:auto;
-    padding:20px;
-}
+    <title>Daily Predictions</title>
 
-table{
-    width:100%;
-    border-collapse:collapse;
-    margin-top:20px;
-}
+    <style>
 
-th{
-    background:#16a34a;
-    padding:12px;
-}
+        body {
+            margin: 0;
+            background: #0d1117;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
 
-td{
-    background:#161b22;
-    padding:12px;
-    text-align:center;
-    border-bottom:1px solid #333;
-}
+        header {
+            background: #16a34a;
+            text-align: center;
+            padding: 18px;
+            font-size: 28px;
+            font-weight: bold;
+        }
 
-.win{
-    color:#00ff66;
-    font-weight:bold;
-}
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+        }
 
-footer{
-    text-align:center;
-    padding:20px;
-    color:#aaa;
-}
-</style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th {
+            background: #16a34a;
+            padding: 12px;
+        }
+
+        td {
+            background: #161b22;
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #333;
+        }
+
+        .pending {
+            color: gold;
+            font-weight: bold;
+        }
+
+        .won {
+            color: #00ff66;
+            font-weight: bold;
+        }
+
+        .lost {
+            color: #ff4d4d;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #aaa;
+        }
+
+    </style>
+
 </head>
 
 <body>
 
 <header>
-⚽ Daily Football Predictions
+    ⚽ Daily Football Predictions
 </header>
+
 
 <div class="container">
 
-<h2>Today's Predictions</h2>
+    <h2>
+        Today's Predictions
+    </h2>
 
-<table>
-<tr>
-<th>Match</th>
-<th>Prediction</th>
-<th>Odds</th>
-<th>Status</th>
-</tr>
 
-<tr>
-<td>Chelsea vs Arsenal</td>
-<td>Both Teams To Score</td>
-<td>1.75</td>
-<td class="win">Pending</td>
-</tr>
+    <table>
 
-<tr>
-<td>Barcelona vs Sevilla</td>
-<td>Home Win</td>
-<td>1.65</td>
-<td class="win">Pending</td>
-</tr>
+        <thead>
 
-<tr>
-<td>PSG vs Marseille</td>
-<td>Over 2.5 Goals</td>
-<td>1.70</td>
-<td class="win">Pending</td>
-</tr>
+            <tr>
 
-</table>
+                <th>
+                    Match
+                </th>
+
+                <th>
+                    Prediction
+                </th>
+
+                <th>
+                    Odds
+                </th>
+
+                <th>
+                    Status
+                </th>
+
+            </tr>
+
+        </thead>
+
+
+        <tbody id="tipsTable">
+
+            <tr>
+
+                <td colspan="4">
+                    Loading predictions...
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
 
 </div>
 
+
 <footer>
-Updated Daily
+
+    Updated Daily
+
 </footer>
+
+
+<script type="module">
+
+import { db } from "./firebase.js";
+
+import {
+    collection,
+    getDocs
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+
+const table =
+    document.getElementById("tipsTable");
+
+
+async function loadTips() {
+
+    try {
+
+        const snapshot =
+            await getDocs(
+                collection(db, "freeTips")
+            );
+
+
+        table.innerHTML = "";
+
+
+        if (snapshot.empty) {
+
+            table.innerHTML = `
+                <tr>
+                    <td colspan="4">
+                        No predictions available.
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+
+        snapshot.forEach((tipDoc) => {
+
+            const tip =
+                tipDoc.data();
+
+
+            const row =
+                document.createElement("tr");
+
+
+            row.innerHTML = `
+
+                <td>
+                    ${tip.home || ""} 
+                    vs 
+                    ${tip.away || ""}
+                </td>
+
+                <td>
+                    ${tip.prediction || ""}
+                </td>
+
+                <td>
+                    ${tip.odds || ""}
+                </td>
+
+                <td class="${tip.status || "pending"}">
+
+                    ${(tip.status || "pending").toUpperCase()}
+
+                </td>
+
+            `;
+
+
+            table.appendChild(row);
+
+        });
+
+
+    } catch (error) {
+
+        console.error(
+            "Could not load predictions:",
+            error
+        );
+
+
+        table.innerHTML = `
+            <tr>
+                <td colspan="4">
+                    Unable to load predictions.
+                </td>
+            </tr>
+        `;
+
+    }
+
+}
+
+
+loadTips();
+
+</script>
 
 </body>
 </html>
