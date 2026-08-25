@@ -475,34 +475,33 @@ document
 // FREE TIPS MANAGER
 // ==========================================
 
-let editingTipId = null;
-
-
-// ==========================================
-// PUBLISH / UPDATE FREE TIP
-// ==========================================
-
 document
     .getElementById("addTipBtn")
     .addEventListener("click", async () => {
 
         const home =
-            document.getElementById("tipHome").value.trim();
+            document.getElementById("tipHome")
+                .value.trim();
 
         const away =
-            document.getElementById("tipAway").value.trim();
+            document.getElementById("tipAway")
+                .value.trim();
 
         const prediction =
-            document.getElementById("tipPrediction").value.trim();
+            document.getElementById("tipPrediction")
+                .value.trim();
 
         const odds =
-            document.getElementById("tipOdds").value.trim();
+            document.getElementById("tipOdds")
+                .value.trim();
 
         const date =
-            document.getElementById("tipDate").value;
+            document.getElementById("tipDate")
+                .value;
 
         const status =
-            document.getElementById("tipStatus").value;
+            document.getElementById("tipStatus")
+                .value;
 
 
         if (
@@ -513,7 +512,9 @@ document
             !date
         ) {
 
-            alert("Please fill in all free tip fields.");
+            alert(
+                "Please fill in all free tip fields."
+            );
 
             return;
         }
@@ -521,68 +522,54 @@ document
 
         try {
 
-            // ==============================
-            // UPDATE EXISTING TIP
-            // ==============================
+            await addDoc(
+                collection(db, "freeTips"),
+                {
 
-            if (editingTipId) {
+                    home: home,
 
-                await setDoc(
-                    doc(db, "freeTips", editingTipId),
-                    {
-                        home: home,
-                        away: away,
-                        prediction: prediction,
-                        odds: odds,
-                        date: date,
-                        status: status,
-                        updatedAt: serverTimestamp()
-                    },
-                    {
-                        merge: true
-                    }
-                );
+                    away: away,
 
+                    prediction: prediction,
 
-                alert("✅ Free tip updated successfully!");
+                    odds: odds,
+
+                    date: date,
+
+                    status: status,
+
+                    createdAt:
+                        serverTimestamp()
+
+                }
+            );
 
 
-                editingTipId = null;
+            alert(
+                "✅ Free tip published successfully!"
+            );
 
 
-                document.getElementById(
-                    "addTipBtn"
-                ).textContent =
-                    "➕ Publish Free Tip";
+            document.getElementById(
+                "tipHome"
+            ).value = "";
 
-            }
+            document.getElementById(
+                "tipAway"
+            ).value = "";
 
-            // ==============================
-            // CREATE NEW TIP
-            // ==============================
+            document.getElementById(
+                "tipPrediction"
+            ).value = "";
 
-            else {
+            document.getElementById(
+                "tipOdds"
+            ).value = "";
 
-                await addDoc(
-                    collection(db, "freeTips"),
-                    {
-                        home: home,
-                        away: away,
-                        prediction: prediction,
-                        odds: odds,
-                        date: date,
-                        status: status,
-                        createdAt: serverTimestamp()
-                    }
-                );
+            document.getElementById(
+                "tipDate"
+            ).value = "";
 
-
-                alert("✅ Free tip published successfully!");
-
-            }
-
-
-            clearTipForm();
 
             loadFreeTips();
 
@@ -595,7 +582,7 @@ document
             );
 
             alert(
-                "❌ Could not save free tip:\n" +
+                "❌ Could not publish tip:\n" +
                 error.message
             );
 
@@ -611,14 +598,19 @@ document
 async function loadFreeTips() {
 
     const list =
-        document.getElementById("tipsList");
+        document.getElementById(
+            "tipsList"
+        );
 
 
     try {
 
         const snapshot =
             await getDocs(
-                collection(db, "freeTips")
+                collection(
+                    db,
+                    "freeTips"
+                )
             );
 
 
@@ -634,110 +626,90 @@ async function loadFreeTips() {
         }
 
 
-        snapshot.forEach((tipDoc) => {
+        snapshot.forEach(
+            (tipDoc) => {
 
-            const data =
-                tipDoc.data();
-
-
-            const card =
-                document.createElement("div");
+                const data =
+                    tipDoc.data();
 
 
-            card.className =
-                "match-card";
+                const card =
+                    document.createElement(
+                        "div"
+                    );
 
 
-            card.innerHTML = `
-
-                <h3>
-                    ${data.home}
-                    vs
-                    ${data.away}
-                </h3>
-
-                <p>
-                    🎯 Prediction:
-                    ${data.prediction}
-                </p>
-
-                <p>
-                    📈 Odds:
-                    ${data.odds}
-                </p>
-
-                <p>
-                    📅 Date:
-                    ${data.date}
-                </p>
-
-                <p>
-                    Status:
-                    ${data.status}
-                </p>
-
-                <button
-                    class="edit-tip"
-                    data-id="${tipDoc.id}">
-
-                    ✏️ Edit
-
-                </button>
-
-                <button
-                    class="delete-tip"
-                    data-id="${tipDoc.id}">
-
-                    🗑️ Delete
-
-                </button>
-
-            `;
+                card.className =
+                    "match-card";
 
 
-            list.appendChild(card);
+                card.innerHTML = `
 
-        });
+                    <h3>
+                        ${data.home}
+                        vs
+                        ${data.away}
+                    </h3>
+
+                    <p>
+                        🎯 Prediction:
+                        ${data.prediction}
+                    </p>
+
+                    <p>
+                        📈 Odds:
+                        ${data.odds}
+                    </p>
+
+                    <p>
+                        📅 Date:
+                        ${data.date}
+                    </p>
+
+                    <p>
+                        Status:
+                        ${data.status}
+                    </p>
+
+                    <button
+                        class="delete-tip"
+                        data-id="${tipDoc.id}">
+
+                        🗑️ Delete
+
+                    </button>
+
+                `;
 
 
-        // EDIT BUTTONS
-
-        document
-            .querySelectorAll(".edit-tip")
-            .forEach((button) => {
-
-                button.addEventListener(
-                    "click",
-                    () => {
-
-                        editFreeTip(
-                            button.dataset.id
-                        );
-
-                    }
+                list.appendChild(
+                    card
                 );
 
-            });
+            }
+        );
 
-
-        // DELETE BUTTONS
 
         document
-            .querySelectorAll(".delete-tip")
-            .forEach((button) => {
+            .querySelectorAll(
+                ".delete-tip"
+            )
+            .forEach(
+                (button) => {
 
-                button.addEventListener(
-                    "click",
-                    () => {
+                    button.addEventListener(
+                        "click",
+                        () => {
 
-                        deleteFreeTip(
-                            button.dataset.id
-                        );
+                            deleteFreeTip(
+                                button.dataset.id
+                            );
 
-                    }
-                );
+                        }
+                    );
 
-            });
+                }
+            );
 
 
     } catch (error) {
@@ -756,99 +728,6 @@ async function loadFreeTips() {
 
 
 // ==========================================
-// EDIT FREE TIP
-// ==========================================
-
-async function editFreeTip(id) {
-
-    try {
-
-        const tipDoc =
-            await getDoc(
-                doc(db, "freeTips", id)
-            );
-
-
-        if (!tipDoc.exists()) {
-
-            alert("This free tip no longer exists.");
-
-            return;
-        }
-
-
-        const data =
-            tipDoc.data();
-
-
-        document.getElementById(
-            "tipHome"
-        ).value =
-            data.home || "";
-
-
-        document.getElementById(
-            "tipAway"
-        ).value =
-            data.away || "";
-
-
-        document.getElementById(
-            "tipPrediction"
-        ).value =
-            data.prediction || "";
-
-
-        document.getElementById(
-            "tipOdds"
-        ).value =
-            data.odds || "";
-
-
-        document.getElementById(
-            "tipDate"
-        ).value =
-            data.date || "";
-
-
-        document.getElementById(
-            "tipStatus"
-        ).value =
-            data.status || "pending";
-
-
-        editingTipId = id;
-
-
-        document.getElementById(
-            "addTipBtn"
-        ).textContent =
-            "💾 Update Free Tip";
-
-
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-
-
-    } catch (error) {
-
-        console.error(
-            "Edit tip error:",
-            error
-        );
-
-        alert(
-            "❌ Could not load this tip."
-        );
-
-    }
-
-}
-
-
-// ==========================================
 // DELETE FREE TIP
 // ==========================================
 
@@ -856,22 +735,29 @@ async function deleteFreeTip(id) {
 
     if (
         !confirm(
-            "Are you sure you want to delete this free tip?"
+            "Delete this free tip?"
         )
     ) {
 
         return;
+
     }
 
 
     try {
 
         await deleteDoc(
-            doc(db, "freeTips", id)
+            doc(
+                db,
+                "freeTips",
+                id
+            )
         );
 
 
-        alert("✅ Free tip deleted.");
+        alert(
+            "✅ Free tip deleted."
+        );
 
 
         loadFreeTips();
@@ -894,133 +780,6 @@ async function deleteFreeTip(id) {
 }
 
 
-// ==========================================
-// CLEAR FORM
-// ==========================================
-
-function clearTipForm() {
-
-    document.getElementById(
-        "tipHome"
-    ).value = "";
-
-    document.getElementById(
-        "tipAway"
-    ).value = "";
-
-    document.getElementById(
-        "tipPrediction"
-    ).value = "";
-
-    document.getElementById(
-        "tipOdds"
-    ).value = "";
-
-    document.getElementById(
-        "tipDate"
-    ).value = "";
-
-    document.getElementById(
-        "tipStatus"
-    ).value = "pending";
-
-}
-
-
-// ==========================================
-// LOAD TIPS WHEN ADMIN OPENS
-// ==========================================
+// Load tips when admin opens
 
 loadFreeTips();
-// ==========================================
-// LOAD RECENT RESULTS
-// ==========================================
-
-async function loadResults() {
-
-    const list =
-        document.getElementById("resultsList");
-
-    try {
-
-        const snapshot =
-            await getDocs(
-                collection(db, "results")
-            );
-
-        list.innerHTML = "";
-
-        if (snapshot.empty) {
-
-            list.innerHTML =
-                "<p>No results added yet.</p>";
-
-            return;
-        }
-
-        snapshot.forEach((resultDoc) => {
-
-            const data =
-                resultDoc.data();
-
-            const card =
-                document.createElement("div");
-
-            card.className =
-                "match-card";
-
-            card.innerHTML = `
-
-                <h3>
-                    ${data.home} vs ${data.away}
-                </h3>
-
-                <p>
-                    🏆 Score:
-                    ${data.score}
-                </p>
-
-                <p>
-                    ℹ️ ${data.info || "Match completed"}
-                </p>
-
-                <button
-                    class="edit-result"
-                    data-id="${resultDoc.id}">
-
-                    ✏️ Edit
-
-                </button>
-
-                <button
-                    class="delete-result"
-                    data-id="${resultDoc.id}">
-
-                    🗑️ Delete
-
-                </button>
-
-            `;
-
-            list.appendChild(card);
-
-        });
-
-    } catch (error) {
-
-        console.error(
-            "Could not load results:",
-            error
-        );
-
-        list.innerHTML =
-            "<p>Unable to load results.</p>";
-
-    }
-
-}
-
-
-// Load results when Admin opens
-
-loadResults();
