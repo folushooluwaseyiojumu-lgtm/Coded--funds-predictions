@@ -193,7 +193,25 @@
         src="./login.js">
     </script>
 
+<script>
+window.addEventListener("error", function(event) {
+    alert(
+        "JavaScript Error:\n\n" +
+        event.message +
+        "\n\nFile: " +
+        event.filename +
+        "\nLine: " +
+        event.lineno
+    );
+});
 
+window.addEventListener("unhandledrejection", function(event) {
+    alert(
+        "Firebase/Promise Error:\n\n" +
+        event.reason
+    );
+});
+</script>
 </body>
 
 </html>
