@@ -198,7 +198,14 @@ document
 
 
 // ==========================================
-// ADD RESULT
+// RECENT RESULTS MANAGER
+// ==========================================
+
+let editingResultId = null;
+
+
+// ==========================================
+// ADD / UPDATE RESULT
 // ==========================================
 
 document
@@ -206,16 +213,20 @@ document
     .addEventListener("click", async () => {
 
         const home =
-            document.getElementById("resultHome").value.trim();
+            document.getElementById("resultHome")
+                .value.trim();
 
         const away =
-            document.getElementById("resultAway").value.trim();
+            document.getElementById("resultAway")
+                .value.trim();
 
         const score =
-            document.getElementById("resultScore").value.trim();
+            document.getElementById("resultScore")
+                .value.trim();
 
         const info =
-            document.getElementById("resultInfo").value.trim();
+            document.getElementById("resultInfo")
+                .value.trim();
 
 
         if (!home || !away || !score) {
@@ -230,33 +241,84 @@ document
 
         try {
 
-            await addDoc(
-                collection(db, "results"),
-                {
-                    home: home,
-                    away: away,
-                    score: score,
-                    info: info,
-                    createdAt: serverTimestamp()
-                }
-            );
+            // UPDATE EXISTING RESULT
+            if (editingResultId) {
+
+                await setDoc(
+                    doc(
+                        db,
+                        "results",
+                        editingResultId
+                    ),
+                    {
+                        home: home,
+                        away: away,
+                        score: score,
+                        info: info,
+                        updatedAt:
+                            serverTimestamp()
+                    },
+                    {
+                        merge: true
+                    }
+                );
 
 
-            alert("✅ Match result added successfully!");
+                alert(
+                    "✅ Result updated successfully!"
+                );
 
 
-            document.getElementById("resultHome").value = "";
-            document.getElementById("resultAway").value = "";
-            document.getElementById("resultScore").value = "";
-            document.getElementById("resultInfo").value = "";
+                editingResultId = null;
+
+
+                document.getElementById(
+                    "addResultBtn"
+                ).textContent =
+                    "🏆 Add Result";
+
+            }
+
+            // ADD NEW RESULT
+            else {
+
+                await addDoc(
+                    collection(
+                        db,
+                        "results"
+                    ),
+                    {
+                        home: home,
+                        away: away,
+                        score: score,
+                        info: info,
+                        createdAt:
+                            serverTimestamp()
+                    }
+                );
+
+
+                alert(
+                    "✅ Result added successfully!"
+                );
+
+            }
+
+
+            clearResultForm();
+
+            loadResults();
 
 
         } catch (error) {
 
-            console.error("Add result error:", error);
+            console.error(
+                "Result error:",
+                error
+            );
 
             alert(
-                "❌ Could not add result.\n\n" +
+                "❌ Could not save result:\n" +
                 error.message
             );
 
@@ -265,6 +327,331 @@ document
     });
 
 
+// ==========================================
+// LOAD RESULTS
+// ==========================================
+
+async function loadResults() {
+
+    const list =
+        document.getElementById(
+            "resultsList"
+        );
+
+
+    if (!list) {
+        return;
+    }
+
+
+    try {
+
+        const snapshot =
+            await getDocs(
+                collection(
+                    db,
+                    "results"
+                )
+            );
+
+
+        list.innerHTML = "";
+
+
+        if (snapshot.empty) {
+
+            list.innerHTML =
+                "<p>No results added yet.</p>";
+
+            return;
+        }
+
+
+        snapshot.forEach((resultDoc) => {
+
+            const data =
+                resultDoc.data();
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "match-card";
+
+
+            card.innerHTML = `
+
+                <h3>
+                    ${data.home}
+                    vs
+                    ${data.away}
+                </h3>
+
+                <p>
+                    🏆 Score:
+                    ${data.score}
+                </p>
+
+                <p>
+                    ℹ️ ${data.info || ""}
+                </p>
+
+                <button
+                    class="edit-result"
+                    data-id="${resultDoc.id}">
+
+                    ✏️ Edit
+
+                </button>
+
+                <button
+                    class="delete-result"
+                    data-id="${resultDoc.id}">
+
+                    🗑️ Delete
+
+                </button>
+
+            `;
+
+
+            list.appendChild(card);
+
+        });
+
+
+        // EDIT BUTTONS
+
+        document
+            .querySelectorAll(
+                ".edit-result"
+            )
+            .forEach((button) => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        editResult(
+                            button.dataset.id
+                        );
+
+                    }
+                );
+
+            });
+
+
+        // DELETE BUTTONS
+
+        document
+            .querySelectorAll(
+                ".delete-result"
+            )
+            .forEach((button) => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        deleteResult(
+                            button.dataset.id
+                        );
+
+                    }
+                );
+
+            });
+
+
+    } catch (error) {
+
+        console.error(
+            "Load results error:",
+            error
+        );
+
+        list.innerHTML =
+            "<p>Unable to load results.</p>";
+
+    }
+
+}
+
+
+// ==========================================
+// EDIT RESULT
+// ==========================================
+
+async function editResult(id) {
+
+    try {
+
+        const resultDoc =
+            await getDoc(
+                doc(
+                    db,
+                    "results",
+                    id
+                )
+            );
+
+
+        if (!resultDoc.exists()) {
+
+            alert(
+                "This result no longer exists."
+            );
+
+            return;
+        }
+
+
+        const data =
+            resultDoc.data();
+
+
+        document.getElementById(
+            "resultHome"
+        ).value =
+            data.home || "";
+
+
+        document.getElementById(
+            "resultAway"
+        ).value =
+            data.away || "";
+
+
+        document.getElementById(
+            "resultScore"
+        ).value =
+            data.score || "";
+
+
+        document.getElementById(
+            "resultInfo"
+        ).value =
+            data.info || "";
+
+
+        editingResultId = id;
+
+
+        document.getElementById(
+            "addResultBtn"
+        ).textContent =
+            "💾 Update Result";
+
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+
+    } catch (error) {
+
+        console.error(
+            "Edit result error:",
+            error
+        );
+
+        alert(
+            "❌ Could not load this result."
+        );
+
+    }
+
+}
+
+
+// ==========================================
+// DELETE RESULT
+// ==========================================
+
+async function deleteResult(id) {
+
+    if (
+        !confirm(
+            "Are you sure you want to delete this result?"
+        )
+    ) {
+
+        return;
+    }
+
+
+    try {
+
+        await deleteDoc(
+            doc(
+                db,
+                "results",
+                id
+            )
+        );
+
+
+        alert(
+            "✅ Result deleted."
+        );
+
+
+        loadResults();
+
+
+    } catch (error) {
+
+        console.error(
+            "Delete result error:",
+            error
+        );
+
+        alert(
+            "❌ Could not delete result:\n" +
+            error.message
+        );
+
+    }
+
+}
+
+
+// ==========================================
+// CLEAR RESULT FORM
+// ==========================================
+
+function clearResultForm() {
+
+    document.getElementById(
+        "resultHome"
+    ).value = "";
+
+    document.getElementById(
+        "resultAway"
+    ).value = "";
+
+    document.getElementById(
+        "resultScore"
+    ).value = "";
+
+    document.getElementById(
+        "resultInfo"
+    ).value = "";
+
+}
+
+
+// ==========================================
+// LOAD RESULTS WHEN ADMIN OPENS
+// ==========================================
+
+loadResults();
 // ==========================================
 // LOAD MATCHES
 // ==========================================
