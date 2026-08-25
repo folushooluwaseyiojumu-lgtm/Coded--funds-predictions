@@ -16,10 +16,6 @@
 
 <body>
 
-<!-- ==========================================
-     NAVIGATION
-========================================== -->
-
 <header class="navbar">
 
     <div class="logo">
@@ -41,16 +37,7 @@
 </header>
 
 
-<!-- ==========================================
-     MAIN ADMIN CONTAINER
-========================================== -->
-
 <main class="admin-container">
-
-
-    <!-- ==========================================
-         ADMIN HEADER
-    =========================================== -->
 
     <div class="admin-header">
 
@@ -65,9 +52,7 @@
     </div>
 
 
-    <!-- ==========================================
-         NEXT MATCH COUNTDOWN
-    =========================================== -->
+    <!-- UPCOMING MATCH -->
 
     <section class="admin-card">
 
@@ -85,6 +70,7 @@
             placeholder="Example: Arsenal"
         >
 
+
         <label>
             Away Team
         </label>
@@ -95,6 +81,7 @@
             placeholder="Example: Chelsea"
         >
 
+
         <label>
             Match Date & Time
         </label>
@@ -104,20 +91,16 @@
             id="matchDate"
         >
 
-        <button
-            type="button"
-            id="saveCountdownBtn">
 
+        <button id="saveCountdownBtn">
             💾 Save Countdown
-
         </button>
 
     </section>
 
 
-    <!-- ==========================================
-         ADD MATCH
-    =========================================== -->
+
+    <!-- ADD MATCH -->
 
     <section class="admin-card">
 
@@ -135,6 +118,7 @@
             placeholder="Example: Liverpool"
         >
 
+
         <label>
             Away Team
         </label>
@@ -144,6 +128,7 @@
             id="matchAway"
             placeholder="Example: Everton"
         >
+
 
         <label>
             Match Status
@@ -165,6 +150,7 @@
 
         </select>
 
+
         <label>
             Match Time
         </label>
@@ -174,6 +160,7 @@
             id="matchTime"
             placeholder="Example: 20:00"
         >
+
 
         <label>
             Score
@@ -185,20 +172,76 @@
             placeholder="Example: 2 - 1"
         >
 
-        <button
-            type="button"
-            id="addMatchBtn">
 
+        <button id="addMatchBtn">
             ➕ Add Match
-
         </button>
 
     </section>
 
 
-    <!-- ==========================================
-         CURRENT MATCHES
-    =========================================== -->
+
+    <!-- RECENT RESULT -->
+
+    <section class="admin-card">
+
+        <h2>
+            🏆 Add Match Result
+        </h2>
+
+        <label>
+            Home Team
+        </label>
+
+        <input
+            type="text"
+            id="resultHome"
+            placeholder="Example: Liverpool"
+        >
+
+
+        <label>
+            Away Team
+        </label>
+
+        <input
+            type="text"
+            id="resultAway"
+            placeholder="Example: Everton"
+        >
+
+
+        <label>
+            Final Score
+        </label>
+
+        <input
+            type="text"
+            id="resultScore"
+            placeholder="Example: 3 - 1"
+        >
+
+
+        <label>
+            Match Information
+        </label>
+
+        <input
+            type="text"
+            id="resultInfo"
+            placeholder="Example: Match completed"
+        >
+
+
+        <button id="addResultBtn">
+            🏆 Add Result
+        </button>
+
+    </section>
+
+
+
+    <!-- CURRENT CONTENT -->
 
     <section class="admin-card">
 
@@ -217,205 +260,12 @@
     </section>
 
 
-    <!-- ==========================================
-         ADD MATCH RESULT
-    =========================================== -->
 
-    <section class="admin-card">
-
-        <h2>
-            🏆 Add Match Result
-        </h2>
-
-        <label>
-            Home Team
-        </label>
-
-        <input
-            type="text"
-            id="resultHome"
-            placeholder="Example: Liverpool"
-        >
-
-        <label>
-            Away Team
-        </label>
-
-        <input
-            type="text"
-            id="resultAway"
-            placeholder="Example: Everton"
-        >
-
-        <label>
-            Final Score
-        </label>
-
-        <input
-            type="text"
-            id="resultScore"
-            placeholder="Example: 3 - 1"
-        >
-
-        <label>
-            Match Information
-        </label>
-
-        <input
-            type="text"
-            id="resultInfo"
-            placeholder="Example: Match completed"
-        >
-
-        <button
-            type="button"
-            id="addResultBtn">
-
-            🏆 Add Result
-
-        </button>
-
-
-        <hr>
-
-
-        <h3>
-            📋 Current Results
-        </h3>
-
-        <div id="resultsList">
-
-            <p>
-                Loading results...
-            </p>
-
-        </div>
-
-    </section>
-
-
-    <!-- ==========================================
-         FREE TIPS MANAGER
-    =========================================== -->
-
-    <section class="admin-card">
-
-        <h2>
-            ⚽ Free Tips Manager
-        </h2>
-
-
-        <label>
-            Home Team
-        </label>
-
-        <input
-            type="text"
-            id="tipHome"
-            placeholder="Example: Arsenal"
-        >
-
-
-        <label>
-            Away Team
-        </label>
-
-        <input
-            type="text"
-            id="tipAway"
-            placeholder="Example: Chelsea"
-        >
-
-
-        <label>
-            Prediction
-        </label>
-
-        <input
-            type="text"
-            id="tipPrediction"
-            placeholder="Example: Arsenal Win"
-        >
-
-
-        <label>
-            Odds
-        </label>
-
-        <input
-            type="text"
-            id="tipOdds"
-            placeholder="Example: 1.85"
-        >
-
-
-        <label>
-            Match Date
-        </label>
-
-        <input
-            type="date"
-            id="tipDate"
-        >
-
-
-        <label>
-            Status
-        </label>
-
-        <select id="tipStatus">
-
-            <option value="pending">
-                ⏳ Pending
-            </option>
-
-            <option value="won">
-                ✅ Won
-            </option>
-
-            <option value="lost">
-                ❌ Lost
-            </option>
-
-        </select>
-
-
-        <button
-            type="button"
-            id="addTipBtn">
-
-            ➕ Publish Free Tip
-
-        </button>
-
-
-        <hr>
-
-
-        <h3>
-            📋 Published Free Tips
-        </h3>
-
-
-        <div id="tipsList">
-
-            <p>
-                Loading free tips...
-            </p>
-
-        </div>
-
-    </section>
-
-
-    <!-- ==========================================
-         LOGOUT
-    =========================================== -->
+    <!-- LOGOUT -->
 
     <section class="admin-card">
 
         <button
-            type="button"
             id="logoutBtn"
             class="logout-btn">
 
@@ -425,13 +275,8 @@
 
     </section>
 
-
 </main>
 
-
-<!-- ==========================================
-     FOOTER
-========================================== -->
 
 <footer>
 
@@ -442,15 +287,7 @@
 </footer>
 
 
-<!-- ==========================================
-     ADMIN JAVASCRIPT
-========================================== -->
-
-<script
-    type="module"
-    src="admin.js">
-</script>
-
+<script type="module" src="admin.js"></script>
 
 </body>
 
