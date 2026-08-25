@@ -325,7 +325,19 @@ document
         }
 
     });
+<hr>
 
+<h3>
+    📋 Current Results
+</h3>
+
+<div id="resultsList">
+
+    <p>
+        Loading results...
+    </p>
+
+</div>
 
 // ==========================================
 // LOAD RESULTS
