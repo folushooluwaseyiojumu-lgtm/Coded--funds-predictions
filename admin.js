@@ -17,18 +17,18 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 
-// ==========================================
-// YOUR ADMIN EMAIL
-// ==========================================
+// ===============================
+// ADMIN EMAIL
+// ===============================
 
 const ADMIN_EMAIL = "folushooluwaseyiojumu@gmail.com";
 
 
-// ==========================================
+// ===============================
 // CHECK ADMIN LOGIN
-// ==========================================
+// ===============================
 
-onAuthStateChanged(auth, async (user) => {
+onAuthStateChanged(auth, (user) => {
 
     if (!user) {
 
@@ -39,37 +39,26 @@ onAuthStateChanged(auth, async (user) => {
         return;
     }
 
+    if (user.email !== ADMIN_EMAIL) {
 
-    // Make sure only your account can use Admin
-    if (
-        !user.email ||
-        user.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()
-    ) {
-
-        alert("Access denied. Admin account required.");
-
-        await signOut(auth);
+        alert("Access denied. Admin only.");
 
         window.location.href = "index.html";
 
         return;
     }
 
-
     console.log("Admin logged in:", user.email);
 
-
-    // Load existing data
-    await loadMatches();
-
-    await loadCountdown();
+    loadMatches();
+    loadCountdown();
 
 });
 
 
-// ==========================================
+// ===============================
 // SAVE COUNTDOWN
-// ==========================================
+// ===============================
 
 document
     .getElementById("saveCountdownBtn")
@@ -108,14 +97,12 @@ document
 
             alert("✅ Countdown saved successfully!");
 
-            console.log("Countdown saved.");
-
         } catch (error) {
 
             console.error("Countdown error:", error);
 
             alert(
-                "❌ Could not save countdown.\n\n" +
+                "❌ Could not save countdown:\n" +
                 error.message
             );
 
@@ -124,9 +111,9 @@ document
     });
 
 
-// ==========================================
+// ===============================
 // ADD MATCH
-// ==========================================
+// ===============================
 
 document
     .getElementById("addMatchBtn")
@@ -180,15 +167,15 @@ document
             document.getElementById("matchScore").value = "";
 
 
-            await loadMatches();
+            loadMatches();
 
 
         } catch (error) {
 
-            console.error("Add match error:", error);
+            console.error("Match error:", error);
 
             alert(
-                "❌ Could not add match.\n\n" +
+                "❌ Could not add match:\n" +
                 error.message
             );
 
@@ -197,9 +184,9 @@ document
     });
 
 
-// ==========================================
+// ===============================
 // ADD RESULT
-// ==========================================
+// ===============================
 
 document
     .getElementById("addResultBtn")
@@ -242,7 +229,7 @@ document
             );
 
 
-            alert("✅ Match result added successfully!");
+            alert("✅ Result added successfully!");
 
 
             document.getElementById("resultHome").value = "";
@@ -253,10 +240,10 @@ document
 
         } catch (error) {
 
-            console.error("Add result error:", error);
+            console.error("Result error:", error);
 
             alert(
-                "❌ Could not add result.\n\n" +
+                "❌ Could not add result:\n" +
                 error.message
             );
 
@@ -265,22 +252,14 @@ document
     });
 
 
-// ==========================================
+// ===============================
 // LOAD MATCHES
-// ==========================================
+// ===============================
 
 async function loadMatches() {
 
     const list =
         document.getElementById("matchesList");
-
-
-    if (!list) {
-
-        console.error("matchesList not found.");
-
-        return;
-    }
 
 
     try {
@@ -297,7 +276,7 @@ async function loadMatches() {
         if (snapshot.empty) {
 
             list.innerHTML =
-                "<p>📭 No matches added yet.</p>";
+                "<p>No matches added yet.</p>";
 
             return;
         }
@@ -305,36 +284,31 @@ async function loadMatches() {
 
         snapshot.forEach((matchDoc) => {
 
-            const data =
-                matchDoc.data();
+            const data = matchDoc.data();
 
 
             const card =
                 document.createElement("div");
 
-            card.className =
-                "match-card";
+            card.className = "match-card";
 
 
             card.innerHTML = `
 
                 <h3>
-                    ⚽ ${data.home || ""} vs ${data.away || ""}
+                    ${data.home} vs ${data.away}
                 </h3>
 
                 <p>
-                    Status:
-                    ${data.status || "Not set"}
+                    Status: ${data.status}
                 </p>
 
                 <p>
-                    Time:
-                    ${data.time || "Not set"}
+                    Time: ${data.time || "Not set"}
                 </p>
 
                 <p>
-                    Score:
-                    ${data.score || "Not available"}
+                    Score: ${data.score || "Not available"}
                 </p>
 
                 <button
@@ -359,13 +333,7 @@ async function loadMatches() {
 
                 button.addEventListener(
                     "click",
-                    async () => {
-
-                        await deleteMatch(
-                            button.dataset.id
-                        );
-
-                    }
+                    () => deleteMatch(button.dataset.id)
                 );
 
             });
@@ -373,29 +341,19 @@ async function loadMatches() {
 
     } catch (error) {
 
-        console.error(
-            "Load matches error:",
-            error
-        );
-
+        console.error("Load matches error:", error);
 
         list.innerHTML =
             "<p>❌ Unable to load matches.</p>";
-
-
-        alert(
-            "Could not load matches.\n\n" +
-            error.message
-        );
 
     }
 
 }
 
 
-// ==========================================
+// ===============================
 // DELETE MATCH
-// ==========================================
+// ===============================
 
 async function deleteMatch(id) {
 
@@ -406,7 +364,6 @@ async function deleteMatch(id) {
 
 
     if (!confirmDelete) {
-
         return;
     }
 
@@ -418,22 +375,17 @@ async function deleteMatch(id) {
         );
 
 
-        alert("✅ Match deleted successfully.");
+        alert("✅ Match deleted.");
 
-
-        await loadMatches();
+        loadMatches();
 
 
     } catch (error) {
 
-        console.error(
-            "Delete match error:",
-            error
-        );
-
+        console.error("Delete error:", error);
 
         alert(
-            "❌ Could not delete match.\n\n" +
+            "❌ Could not delete match:\n" +
             error.message
         );
 
@@ -442,9 +394,9 @@ async function deleteMatch(id) {
 }
 
 
-// ==========================================
+// ===============================
 // LOAD COUNTDOWN
-// ==========================================
+// ===============================
 
 async function loadCountdown() {
 
@@ -458,9 +410,7 @@ async function loadCountdown() {
 
         if (!countdownDoc.exists()) {
 
-            console.log(
-                "No countdown has been saved yet."
-            );
+            console.log("No countdown saved yet.");
 
             return;
         }
@@ -485,7 +435,7 @@ async function loadCountdown() {
     } catch (error) {
 
         console.error(
-            "Load countdown error:",
+            "Could not load countdown:",
             error
         );
 
@@ -494,9 +444,9 @@ async function loadCountdown() {
 }
 
 
-// ==========================================
+// ===============================
 // LOGOUT
-// ==========================================
+// ===============================
 
 document
     .getElementById("logoutBtn")
@@ -509,17 +459,12 @@ document
             window.location.href =
                 "login.html";
 
-
         } catch (error) {
 
-            console.error(
-                "Logout error:",
-                error
-            );
-
+            console.error("Logout error:", error);
 
             alert(
-                "Could not logout.\n\n" +
+                "Could not logout:\n" +
                 error.message
             );
 
