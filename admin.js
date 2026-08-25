@@ -8,6 +8,7 @@ import {
     doc,
     setDoc,
     getDoc,
+    updateDoc,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
@@ -17,45 +18,26 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 
-// ==========================================
-// ADMIN EMAIL
-// ==========================================
-
 const ADMIN_EMAIL = "folushooluwaseyiojumu@gmail.com";
 
-
-// ==========================================
-// EDITING ID
-// ==========================================
-
 let editingTipId = null;
-let editingResultId = null;
 
 
-// ==========================================
-// ADMIN LOGIN CHECK
-// ==========================================
+/* ==========================================
+   ADMIN LOGIN CHECK
+========================================== */
 
 onAuthStateChanged(auth, (user) => {
 
     if (!user) {
-
         alert("Please login first.");
-
         window.location.href = "login.html";
-
         return;
     }
 
-    if (
-        !user.email ||
-        user.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()
-    ) {
-
+    if (user.email !== ADMIN_EMAIL) {
         alert("Access denied. Admin only.");
-
         window.location.href = "index.html";
-
         return;
     }
 
@@ -69,68 +51,66 @@ onAuthStateChanged(auth, (user) => {
 });
 
 
-// ==========================================
-// COUNTDOWN
-// ==========================================
+/* ==========================================
+   COUNTDOWN
+========================================== */
 
-const saveCountdownBtn =
-    document.getElementById("saveCountdownBtn");
-
-if (saveCountdownBtn) {
-
-    saveCountdownBtn.addEventListener("click", async () => {
-
-        const homeTeam =
-            document.getElementById("homeTeam").value.trim();
-
-        const awayTeam =
-            document.getElementById("awayTeam").value.trim();
-
-        const matchDate =
-            document.getElementById("matchDate").value;
+document
+    .getElementById("saveCountdownBtn")
+    .addEventListener("click", saveCountdown);
 
 
-        if (!homeTeam || !awayTeam || !matchDate) {
+async function saveCountdown() {
 
-            alert("Please fill in all countdown fields.");
+    const homeTeam =
+        document.getElementById("homeTeam").value.trim();
 
-            return;
-        }
+    const awayTeam =
+        document.getElementById("awayTeam").value.trim();
+
+    const matchDate =
+        document.getElementById("matchDate").value;
 
 
-        try {
+    if (!homeTeam || !awayTeam || !matchDate) {
 
-            await setDoc(
-                doc(db, "siteSettings", "countdown"),
-                {
-                    homeTeam,
-                    awayTeam,
-                    matchDate,
-                    updatedAt: serverTimestamp()
-                }
-            );
+        alert("Please fill in all countdown fields.");
+        return;
 
-            alert("✅ Countdown saved successfully!");
+    }
 
-        } catch (error) {
 
-            console.error(error);
+    try {
 
-            alert(
-                "❌ Could not save countdown:\n" +
-                error.message
-            );
+        await setDoc(
+            doc(db, "siteSettings", "countdown"),
+            {
+                homeTeam,
+                awayTeam,
+                matchDate,
+                updatedAt: serverTimestamp()
+            }
+        );
 
-        }
+        alert("✅ Countdown saved successfully!");
 
-    });
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "❌ Countdown error:\n" +
+            error.message
+        );
+
+    }
 
 }
 
 
-// ==========================================
-// LOAD COUNTDOWN
-// ==========================================
+/* ==========================================
+   LOAD COUNTDOWN
+========================================== */
 
 async function loadCountdown() {
 
@@ -143,33 +123,21 @@ async function loadCountdown() {
 
 
         if (!countdownDoc.exists()) {
-
             return;
         }
 
 
-        const data =
-            countdownDoc.data();
+        const data = countdownDoc.data();
 
 
-        const homeTeam =
-            document.getElementById("homeTeam");
+        document.getElementById("homeTeam").value =
+            data.homeTeam || "";
 
-        const awayTeam =
-            document.getElementById("awayTeam");
+        document.getElementById("awayTeam").value =
+            data.awayTeam || "";
 
-        const matchDate =
-            document.getElementById("matchDate");
-
-
-        if (homeTeam)
-            homeTeam.value = data.homeTeam || "";
-
-        if (awayTeam)
-            awayTeam.value = data.awayTeam || "";
-
-        if (matchDate)
-            matchDate.value = data.matchDate || "";
+        document.getElementById("matchDate").value =
+            data.matchDate || "";
 
 
     } catch (error) {
@@ -184,87 +152,85 @@ async function loadCountdown() {
 }
 
 
-// ==========================================
-// ADD MATCH
-// ==========================================
+/* ==========================================
+   ADD MATCH
+========================================== */
 
-const addMatchBtn =
-    document.getElementById("addMatchBtn");
-
-if (addMatchBtn) {
-
-    addMatchBtn.addEventListener("click", async () => {
-
-        const home =
-            document.getElementById("matchHome").value.trim();
-
-        const away =
-            document.getElementById("matchAway").value.trim();
-
-        const status =
-            document.getElementById("matchStatus").value;
-
-        const time =
-            document.getElementById("matchTime").value.trim();
-
-        const score =
-            document.getElementById("matchScore").value.trim();
+document
+    .getElementById("addMatchBtn")
+    .addEventListener("click", addMatch);
 
 
-        if (!home || !away) {
+async function addMatch() {
 
-            alert("Please enter both teams.");
+    const home =
+        document.getElementById("matchHome").value.trim();
 
-            return;
-        }
+    const away =
+        document.getElementById("matchAway").value.trim();
 
+    const status =
+        document.getElementById("matchStatus").value;
 
-        try {
+    const time =
+        document.getElementById("matchTime").value.trim();
 
-            await addDoc(
-                collection(db, "matches"),
-                {
-                    home,
-                    away,
-                    status,
-                    time,
-                    score,
-                    createdAt: serverTimestamp()
-                }
-            );
+    const score =
+        document.getElementById("matchScore").value.trim();
 
 
-            alert("✅ Match added successfully!");
+    if (!home || !away) {
+
+        alert("Please enter both teams.");
+        return;
+
+    }
 
 
-            document.getElementById("matchHome").value = "";
-            document.getElementById("matchAway").value = "";
-            document.getElementById("matchTime").value = "";
-            document.getElementById("matchScore").value = "";
+    try {
+
+        await addDoc(
+            collection(db, "matches"),
+            {
+                home,
+                away,
+                status,
+                time,
+                score,
+                createdAt: serverTimestamp()
+            }
+        );
 
 
-            loadMatches();
+        alert("✅ Match added successfully!");
 
 
-        } catch (error) {
+        document.getElementById("matchHome").value = "";
+        document.getElementById("matchAway").value = "";
+        document.getElementById("matchTime").value = "";
+        document.getElementById("matchScore").value = "";
 
-            console.error(error);
 
-            alert(
-                "❌ Could not add match:\n" +
-                error.message
-            );
+        loadMatches();
 
-        }
 
-    });
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "❌ Could not add match:\n" +
+            error.message
+        );
+
+    }
 
 }
 
 
-// ==========================================
-// LOAD MATCHES
-// ==========================================
+/* ==========================================
+   LOAD MATCHES
+========================================== */
 
 async function loadMatches() {
 
@@ -272,12 +238,7 @@ async function loadMatches() {
         document.getElementById("matchesList");
 
 
-    if (!list) {
-
-        console.log("matchesList not found.");
-
-        return;
-    }
+    if (!list) return;
 
 
     try {
@@ -297,6 +258,7 @@ async function loadMatches() {
                 "<p>No matches added yet.</p>";
 
             return;
+
         }
 
 
@@ -309,9 +271,7 @@ async function loadMatches() {
             const card =
                 document.createElement("div");
 
-
-            card.className =
-                "match-card";
+            card.className = "match-card";
 
 
             card.innerHTML = `
@@ -321,7 +281,7 @@ async function loadMatches() {
                 </h3>
 
                 <p>
-                    Status: ${data.status || "Unknown"}
+                    Status: ${data.status || "Upcoming"}
                 </p>
 
                 <p>
@@ -333,9 +293,12 @@ async function loadMatches() {
                 </p>
 
                 <button
+                    type="button"
                     class="delete-match"
                     data-id="${matchDoc.id}">
+
                     🗑️ Delete
+
                 </button>
 
             `;
@@ -370,9 +333,9 @@ async function loadMatches() {
 }
 
 
-// ==========================================
-// DELETE MATCH
-// ==========================================
+/* ==========================================
+   DELETE MATCH
+========================================== */
 
 async function deleteMatch(id) {
 
@@ -381,7 +344,6 @@ async function deleteMatch(id) {
             "Are you sure you want to delete this match?"
         )
     ) {
-
         return;
     }
 
@@ -412,110 +374,84 @@ async function deleteMatch(id) {
 }
 
 
-// ==========================================
-// ADD / UPDATE RESULT
-// ==========================================
+/* ==========================================
+   ADD RESULT
+========================================== */
 
-const addResultBtn =
-    document.getElementById("addResultBtn");
-
-if (addResultBtn) {
-
-    addResultBtn.addEventListener("click", async () => {
-
-        const home =
-            document.getElementById("resultHome").value.trim();
-
-        const away =
-            document.getElementById("resultAway").value.trim();
-
-        const score =
-            document.getElementById("resultScore").value.trim();
-
-        const info =
-            document.getElementById("resultInfo").value.trim();
+document
+    .getElementById("addResultBtn")
+    .addEventListener("click", addResult);
 
 
-        if (!home || !away || !score) {
+async function addResult() {
 
-            alert(
-                "Please enter the teams and final score."
-            );
+    const home =
+        document.getElementById("resultHome").value.trim();
 
-            return;
-        }
+    const away =
+        document.getElementById("resultAway").value.trim();
 
+    const score =
+        document.getElementById("resultScore").value.trim();
 
-        try {
-
-            if (editingResultId) {
-
-                await setDoc(
-                    doc(db, "results", editingResultId),
-                    {
-                        home,
-                        away,
-                        score,
-                        info,
-                        updatedAt: serverTimestamp()
-                    },
-                    {
-                        merge: true
-                    }
-                );
+    const info =
+        document.getElementById("resultInfo").value.trim();
 
 
-                alert("✅ Result updated successfully!");
+    if (!home || !away || !score) {
+
+        alert(
+            "Please enter the teams and final score."
+        );
+
+        return;
+
+    }
 
 
-                editingResultId = null;
+    try {
 
-                addResultBtn.textContent =
-                    "🏆 Add Result";
-
-            } else {
-
-                await addDoc(
-                    collection(db, "results"),
-                    {
-                        home,
-                        away,
-                        score,
-                        info,
-                        createdAt: serverTimestamp()
-                    }
-                );
-
-
-                alert("✅ Result added successfully!");
-
+        await addDoc(
+            collection(db, "results"),
+            {
+                home,
+                away,
+                score,
+                info,
+                createdAt: serverTimestamp()
             }
+        );
 
 
-            clearResultForm();
-
-            loadResults();
+        alert("✅ Result added successfully!");
 
 
-        } catch (error) {
+        document.getElementById("resultHome").value = "";
+        document.getElementById("resultAway").value = "";
+        document.getElementById("resultScore").value = "";
+        document.getElementById("resultInfo").value = "";
 
-            console.error(error);
 
-            alert(
-                "❌ Could not save result:\n" +
-                error.message
-            );
+        loadResults();
 
-        }
 
-    });
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "❌ Could not add result:\n" +
+            error.message
+        );
+
+    }
 
 }
 
 
-// ==========================================
-// LOAD RESULTS
-// ==========================================
+/* ==========================================
+   LOAD RESULTS
+========================================== */
 
 async function loadResults() {
 
@@ -523,12 +459,7 @@ async function loadResults() {
         document.getElementById("resultsList");
 
 
-    if (!list) {
-
-        console.log("resultsList not found.");
-
-        return;
-    }
+    if (!list) return;
 
 
     try {
@@ -548,6 +479,7 @@ async function loadResults() {
                 "<p>No results added yet.</p>";
 
             return;
+
         }
 
 
@@ -560,9 +492,7 @@ async function loadResults() {
             const card =
                 document.createElement("div");
 
-
-            card.className =
-                "match-card";
+            card.className = "match-card";
 
 
             card.innerHTML = `
@@ -572,8 +502,7 @@ async function loadResults() {
                 </h3>
 
                 <p>
-                    🏆 Score:
-                    ${data.score}
+                    🏆 Score: ${data.score}
                 </p>
 
                 <p>
@@ -581,15 +510,12 @@ async function loadResults() {
                 </p>
 
                 <button
-                    class="edit-result"
-                    data-id="${resultDoc.id}">
-                    ✏️ Edit
-                </button>
-
-                <button
+                    type="button"
                     class="delete-result"
                     data-id="${resultDoc.id}">
+
                     🗑️ Delete
+
                 </button>
 
             `;
@@ -599,22 +525,6 @@ async function loadResults() {
 
         });
 
-
-        // EDIT RESULT
-
-        document
-            .querySelectorAll(".edit-result")
-            .forEach((button) => {
-
-                button.addEventListener(
-                    "click",
-                    () => editResult(button.dataset.id)
-                );
-
-            });
-
-
-        // DELETE RESULT
 
         document
             .querySelectorAll(".delete-result")
@@ -633,85 +543,16 @@ async function loadResults() {
         console.error(error);
 
         list.innerHTML =
-            "<p>❌ Unable to load results.</p>";
+            "<p>Unable to load results.</p>";
 
     }
 
 }
 
 
-// ==========================================
-// EDIT RESULT
-// ==========================================
-
-async function editResult(id) {
-
-    try {
-
-        const resultDoc =
-            await getDoc(
-                doc(db, "results", id)
-            );
-
-
-        if (!resultDoc.exists()) {
-
-            alert("Result no longer exists.");
-
-            return;
-        }
-
-
-        const data =
-            resultDoc.data();
-
-
-        document.getElementById("resultHome").value =
-            data.home || "";
-
-        document.getElementById("resultAway").value =
-            data.away || "";
-
-        document.getElementById("resultScore").value =
-            data.score || "";
-
-        document.getElementById("resultInfo").value =
-            data.info || "";
-
-
-        editingResultId = id;
-
-
-        if (addResultBtn) {
-
-            addResultBtn.textContent =
-                "💾 Update Result";
-
-        }
-
-
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-
-
-    } catch (error) {
-
-        console.error(error);
-
-        alert(
-            "❌ Could not load result."
-        );
-
-    }
-
-}
-
-
-// ==========================================
-// DELETE RESULT
-// ==========================================
+/* ==========================================
+   DELETE RESULT
+========================================== */
 
 async function deleteResult(id) {
 
@@ -720,7 +561,6 @@ async function deleteResult(id) {
             "Are you sure you want to delete this result?"
         )
     ) {
-
         return;
     }
 
@@ -751,146 +591,125 @@ async function deleteResult(id) {
 }
 
 
-// ==========================================
-// CLEAR RESULT FORM
-// ==========================================
+/* ==========================================
+   FREE TIPS - ADD / UPDATE
+========================================== */
 
-function clearResultForm() {
-
-    document.getElementById("resultHome").value = "";
-
-    document.getElementById("resultAway").value = "";
-
-    document.getElementById("resultScore").value = "";
-
-    document.getElementById("resultInfo").value = "";
-
-}
+document
+    .getElementById("addTipBtn")
+    .addEventListener("click", saveFreeTip);
 
 
-// ==========================================
-// FREE TIPS
-// ==========================================
+async function saveFreeTip() {
 
-const addTipBtn =
-    document.getElementById("addTipBtn");
+    const home =
+        document.getElementById("tipHome").value.trim();
 
+    const away =
+        document.getElementById("tipAway").value.trim();
 
-if (addTipBtn) {
+    const prediction =
+        document.getElementById("tipPrediction").value.trim();
 
-    addTipBtn.addEventListener("click", async () => {
+    const odds =
+        document.getElementById("tipOdds").value.trim();
 
-        const home =
-            document.getElementById("tipHome").value.trim();
+    const date =
+        document.getElementById("tipDate").value;
 
-        const away =
-            document.getElementById("tipAway").value.trim();
-
-        const prediction =
-            document.getElementById("tipPrediction").value.trim();
-
-        const odds =
-            document.getElementById("tipOdds").value.trim();
-
-        const date =
-            document.getElementById("tipDate").value;
-
-        const status =
-            document.getElementById("tipStatus").value;
+    const status =
+        document.getElementById("tipStatus").value;
 
 
-        if (
-            !home ||
-            !away ||
-            !prediction ||
-            !odds ||
-            !date
-        ) {
+    if (
+        !home ||
+        !away ||
+        !prediction ||
+        !odds ||
+        !date
+    ) {
 
-            alert(
-                "Please fill in all free tip fields."
+        alert("Please fill in all free tip fields.");
+
+        return;
+
+    }
+
+
+    try {
+
+        if (editingTipId) {
+
+            await updateDoc(
+                doc(db, "freeTips", editingTipId),
+                {
+                    home,
+                    away,
+                    prediction,
+                    odds,
+                    date,
+                    status,
+                    updatedAt: serverTimestamp()
+                }
             );
 
-            return;
-        }
+
+            alert("✅ Free tip updated successfully!");
+
+            editingTipId = null;
 
 
-        try {
-
-            if (editingTipId) {
-
-                await setDoc(
-                    doc(db, "freeTips", editingTipId),
-                    {
-                        home,
-                        away,
-                        prediction,
-                        odds,
-                        date,
-                        status,
-                        updatedAt: serverTimestamp()
-                    },
-                    {
-                        merge: true
-                    }
-                );
+            document.getElementById(
+                "addTipBtn"
+            ).textContent =
+                "➕ Publish Free Tip";
 
 
-                alert("✅ Free tip updated successfully!");
+        } else {
 
+            await addDoc(
+                collection(db, "freeTips"),
+                {
+                    home,
+                    away,
+                    prediction,
+                    odds,
+                    date,
+                    status,
+                    createdAt: serverTimestamp()
+                }
+            );
 
-                editingTipId = null;
-
-                addTipBtn.textContent =
-                    "➕ Publish Free Tip";
-
-            } else {
-
-                await addDoc(
-                    collection(db, "freeTips"),
-                    {
-                        home,
-                        away,
-                        prediction,
-                        odds,
-                        date,
-                        status,
-                        createdAt: serverTimestamp()
-                    }
-                );
-
-
-                alert(
-                    "✅ Free tip published successfully!"
-                );
-
-            }
-
-
-            clearTipForm();
-
-            loadFreeTips();
-
-
-        } catch (error) {
-
-            console.error(error);
 
             alert(
-                "❌ Could not save free tip:\n" +
-                error.message
+                "✅ Free tip published successfully!"
             );
 
         }
 
-    });
+
+        clearTipForm();
+
+        loadFreeTips();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "❌ Could not save free tip:\n" +
+            error.message
+        );
+
+    }
 
 }
 
 
-// ==========================================
-// LOAD FREE TIPS
-// ==========================================
+/* ==========================================
+   LOAD FREE TIPS
+========================================== */
 
 async function loadFreeTips() {
 
@@ -898,12 +717,7 @@ async function loadFreeTips() {
         document.getElementById("tipsList");
 
 
-    if (!list) {
-
-        console.log("tipsList not found.");
-
-        return;
-    }
+    if (!list) return;
 
 
     try {
@@ -923,6 +737,7 @@ async function loadFreeTips() {
                 "<p>No free tips published yet.</p>";
 
             return;
+
         }
 
 
@@ -935,9 +750,7 @@ async function loadFreeTips() {
             const card =
                 document.createElement("div");
 
-
-            card.className =
-                "match-card";
+            card.className = "match-card";
 
 
             card.innerHTML = `
@@ -947,35 +760,37 @@ async function loadFreeTips() {
                 </h3>
 
                 <p>
-                    🎯 Prediction:
-                    ${data.prediction}
+                    🎯 Prediction: ${data.prediction}
                 </p>
 
                 <p>
-                    📈 Odds:
-                    ${data.odds}
+                    📈 Odds: ${data.odds}
                 </p>
 
                 <p>
-                    📅 Date:
-                    ${data.date}
+                    📅 Date: ${data.date}
                 </p>
 
                 <p>
-                    Status:
-                    ${data.status}
+                    Status: ${data.status}
                 </p>
 
                 <button
+                    type="button"
                     class="edit-tip"
                     data-id="${tipDoc.id}">
+
                     ✏️ Edit
+
                 </button>
 
                 <button
+                    type="button"
                     class="delete-tip"
                     data-id="${tipDoc.id}">
+
                     🗑️ Delete
+
                 </button>
 
             `;
@@ -985,8 +800,6 @@ async function loadFreeTips() {
 
         });
 
-
-        // EDIT BUTTONS
 
         document
             .querySelectorAll(".edit-tip")
@@ -999,8 +812,6 @@ async function loadFreeTips() {
 
             });
 
-
-        // DELETE BUTTONS
 
         document
             .querySelectorAll(".delete-tip")
@@ -1019,16 +830,16 @@ async function loadFreeTips() {
         console.error(error);
 
         list.innerHTML =
-            "<p>❌ Unable to load free tips.</p>";
+            "<p>Unable to load free tips.</p>";
 
     }
 
 }
 
 
-// ==========================================
-// EDIT FREE TIP
-// ==========================================
+/* ==========================================
+   EDIT FREE TIP
+========================================== */
 
 async function editFreeTip(id) {
 
@@ -1042,9 +853,10 @@ async function editFreeTip(id) {
 
         if (!tipDoc.exists()) {
 
-            alert("Free tip no longer exists.");
+            alert("This free tip no longer exists.");
 
             return;
+
         }
 
 
@@ -1071,13 +883,13 @@ async function editFreeTip(id) {
             data.status || "pending";
 
 
-        editingTipId =
-            if (addTipBtn) {
+        editingTipId = id;
 
-            addTipBtn.textContent =
-                "💾 Update Free Tip";
 
-        }
+        document.getElementById(
+            "addTipBtn"
+        ).textContent =
+            "💾 Update Free Tip";
 
 
         window.scrollTo({
@@ -1091,7 +903,7 @@ async function editFreeTip(id) {
         console.error(error);
 
         alert(
-            "❌ Could not load free tip."
+            "❌ Could not load this free tip."
         );
 
     }
@@ -1099,9 +911,9 @@ async function editFreeTip(id) {
 }
 
 
-// ==========================================
-// DELETE FREE TIP
-// ==========================================
+/* ==========================================
+   DELETE FREE TIP
+========================================== */
 
 async function deleteFreeTip(id) {
 
@@ -1110,7 +922,6 @@ async function deleteFreeTip(id) {
             "Are you sure you want to delete this free tip?"
         )
     ) {
-
         return;
     }
 
@@ -1141,9 +952,9 @@ async function deleteFreeTip(id) {
 }
 
 
-// ==========================================
-// CLEAR TIP FORM
-// ==========================================
+/* ==========================================
+   CLEAR FREE TIP FORM
+========================================== */
 
 function clearTipForm() {
 
@@ -1163,24 +974,19 @@ function clearTipForm() {
 }
 
 
-// ==========================================
-// LOGOUT
-// ==========================================
+/* ==========================================
+   LOGOUT
+========================================== */
 
-const logoutBtn =
-    document.getElementById("logoutBtn");
-
-
-if (logoutBtn) {
-
-    logoutBtn.addEventListener("click", async () => {
+document
+    .getElementById("logoutBtn")
+    .addEventListener("click", async () => {
 
         try {
 
             await signOut(auth);
 
-            window.location.href =
-                "login.html";
+            window.location.href = "login.html";
 
         } catch (error) {
 
@@ -1194,5 +1000,3 @@ if (logoutBtn) {
         }
 
     });
-
-            }
