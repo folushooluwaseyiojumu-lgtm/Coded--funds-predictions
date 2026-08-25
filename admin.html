@@ -14,7 +14,13 @@
 
 </head>
 
+
 <body>
+
+
+<!-- ==========================================
+     NAVIGATION
+========================================== -->
 
 <header class="navbar">
 
@@ -37,7 +43,17 @@
 </header>
 
 
+
+<!-- ==========================================
+     MAIN ADMIN CONTAINER
+========================================== -->
+
 <main class="admin-container">
+
+
+    <!-- ==========================================
+         ADMIN HEADER
+    =========================================== -->
 
     <div class="admin-header">
 
@@ -52,13 +68,17 @@
     </div>
 
 
-    <!-- UPCOMING MATCH -->
+
+    <!-- ==========================================
+         NEXT MATCH COUNTDOWN
+    =========================================== -->
 
     <section class="admin-card">
 
         <h2>
             ⏳ Next Match Countdown
         </h2>
+
 
         <label>
             Home Team
@@ -100,13 +120,16 @@
 
 
 
-    <!-- ADD MATCH -->
+    <!-- ==========================================
+         ADD MATCH
+    =========================================== -->
 
     <section class="admin-card">
 
         <h2>
             ⚽ Add Match
         </h2>
+
 
         <label>
             Home Team
@@ -177,18 +200,43 @@
             ➕ Add Match
         </button>
 
+    </section>
+
+
+
+    <!-- ==========================================
+         CURRENT MATCHES
+    =========================================== -->
+
+    <section class="admin-card">
+
+        <h2>
+            📋 Current Matches
+        </h2>
+
+
+        <div id="matchesList">
+
+            <p>
+                Loading matches...
+            </p>
+
+        </div>
 
     </section>
 
 
 
-    <!-- RECENT RESULT -->
+    <!-- ==========================================
+         ADD MATCH RESULT
+    =========================================== -->
 
     <section class="admin-card">
 
         <h2>
             🏆 Add Match Result
         </h2>
+
 
         <label>
             Home Team
@@ -237,129 +285,165 @@
         <button id="addResultBtn">
             🏆 Add Result
         </button>
-<hr>
 
-<h3>📋 Current Results</h3>
 
-<div id="resultsList">
+        <hr>
 
-    <p>
-        Loading results...
-    </p>
 
-</div>
+        <h3>
+            📋 Current Results
+        </h3>
+
+
+        <div id="resultsList">
+
+            <p>
+                Loading results...
+            </p>
+
+        </div>
+
     </section>
+
+
+
     <!-- ==========================================
-     FREE TIPS MANAGER
-========================================== -->
+         FREE TIPS MANAGER
+    =========================================== -->
 
-<section class="admin-card">
+    <section class="admin-card">
 
-    <h2>
-        ⚽ Free Tips Manager
-    </h2>
-
-    <label>
-        Home Team
-    </label>
-
-    <input
-        type="text"
-        id="tipHome"
-        placeholder="Example: Arsenal"
-    >
+        <h2>
+            ⚽ Free Tips Manager
+        </h2>
 
 
-    <label>
-        Away Team
-    </label>
+        <label>
+            Home Team
+        </label>
 
-    <input
-        type="text"
-        id="tipAway"
-        placeholder="Example: Chelsea"
-    >
-
-
-    <label>
-        Prediction
-    </label>
-
-    <input
-        type="text"
-        id="tipPrediction"
-        placeholder="Example: Arsenal Win"
-    >
+        <input
+            type="text"
+            id="tipHome"
+            placeholder="Example: Arsenal"
+        >
 
 
-    <label>
-        Odds
-    </label>
+        <label>
+            Away Team
+        </label>
 
-    <input
-        type="text"
-        id="tipOdds"
-        placeholder="Example: 1.85"
-    >
-
-
-    <label>
-        Match Date</label>
-
-    <input
-        type="date"
-        id="tipDate"
-    >
+        <input
+            type="text"
+            id="tipAway"
+            placeholder="Example: Chelsea"
+        >
 
 
-    <label>
-        Status
-    </label>
+        <label>
+            Prediction
+        </label>
 
-    <select id="tipStatus">
-
-        <option value="pending">
-            ⏳ Pending
-        </option>
-
-        <option value="won">
-            ✅ Won
-        </option>
-
-        <option value="lost">
-            ❌ Lost
-        </option>
-
-    </select>
+        <input
+            type="text"
+            id="tipPrediction"
+            placeholder="Example: Arsenal Win"
+        >
 
 
-    <button id="addTipBtn">
+        <label>
+            Odds
+        </label>
 
-        ➕ Publish Free Tip
-
-    </button>
-
-
-    <hr>
-
-
-    <h3>
-        📋 Published Free Tips
-    </h3>
+        <input
+            type="text"
+            id="tipOdds"
+            placeholder="Example: 1.85"
+        >
 
 
-    <div id="tipsList">
+        <label>
+            Match Date
+        </label>
 
-        <p>
-            Loading free tips...
-        </p>
+        <input
+            type="date"
+            id="tipDate"
+        >
 
-    </div>
 
-</section>
+        <label>
+            Status
+        </label>
+
+        <select id="tipStatus">
+
+            <option value="pending">
+                ⏳ Pending
+            </option>
+
+            <option value="won">
+                ✅ Won
+            </option>
+
+            <option value="lost">
+                ❌ Lost
+            </option>
+
+        </select>
+
+
+        <button id="addTipBtn">
+
+            ➕ Publish Free Tip
+
+        </button>
+
+
+        <hr>
+
+
+        <h3>
+            📋 Published Free Tips
+        </h3>
+
+
+        <div id="tipsList">
+
+            <p>
+                Loading free tips...
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         LOGOUT
+    =========================================== -->
+
+    <section class="admin-card">
+
+        <button
+            id="logoutBtn"
+            class="logout-btn">
+
+            🚪 Logout
+
+        </button>
+
+    </section>
+
 
 </main>
 
+
+
+<!-- ==========================================
+     FOOTER
+=========================================== -->
 
 <footer>
 
@@ -369,8 +453,18 @@
 
 </footer>
 
-<script type="module" src="admin.js"></script>
+
+
+<!-- ==========================================
+     ADMIN JAVASCRIPT
+=========================================== -->
+
+<script
+    type="module"
+    src="admin.js">
+</script>
+
 
 </body>
-</html>
 
+</html>
