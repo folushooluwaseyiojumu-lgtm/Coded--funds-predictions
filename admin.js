@@ -932,3 +932,95 @@ function clearTipForm() {
 // ==========================================
 
 loadFreeTips();
+// ==========================================
+// LOAD RECENT RESULTS
+// ==========================================
+
+async function loadResults() {
+
+    const list =
+        document.getElementById("resultsList");
+
+    try {
+
+        const snapshot =
+            await getDocs(
+                collection(db, "results")
+            );
+
+        list.innerHTML = "";
+
+        if (snapshot.empty) {
+
+            list.innerHTML =
+                "<p>No results added yet.</p>";
+
+            return;
+        }
+
+        snapshot.forEach((resultDoc) => {
+
+            const data =
+                resultDoc.data();
+
+            const card =
+                document.createElement("div");
+
+            card.className =
+                "match-card";
+
+            card.innerHTML = `
+
+                <h3>
+                    ${data.home} vs ${data.away}
+                </h3>
+
+                <p>
+                    🏆 Score:
+                    ${data.score}
+                </p>
+
+                <p>
+                    ℹ️ ${data.info || "Match completed"}
+                </p>
+
+                <button
+                    class="edit-result"
+                    data-id="${resultDoc.id}">
+
+                    ✏️ Edit
+
+                </button>
+
+                <button
+                    class="delete-result"
+                    data-id="${resultDoc.id}">
+
+                    🗑️ Delete
+
+                </button>
+
+            `;
+
+            list.appendChild(card);
+
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Could not load results:",
+            error
+        );
+
+        list.innerHTML =
+            "<p>Unable to load results.</p>";
+
+    }
+
+}
+
+
+// Load results when Admin opens
+
+loadResults();
