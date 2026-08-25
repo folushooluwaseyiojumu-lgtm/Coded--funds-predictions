@@ -16,9 +16,7 @@
 
 <body>
 
-
 <section class="vip-section">
-
 
     <!-- HEADER -->
 
@@ -26,8 +24,8 @@
         🔥 CODED FUNDS MEMBERS
     </h1>
 
-    <p id="userEmail">
-        Checking your account...
+    <p>
+        Welcome to Coded Funds VIP.
     </p>
 
 
@@ -52,8 +50,7 @@
 
         <!-- WHATSAPP SUBSCRIBE -->
 
-        <button
-            onclick="contactWhatsApp()">
+        <button id="whatsappBtn">
 
             📲 Subscribe via WhatsApp
 
@@ -93,114 +90,43 @@
     </div>
 
 
-    <!-- ACCOUNT -->
+    <!-- BACK TO HOME -->
 
     <div class="vip-card">
 
         <h2>
-            👤 Account
+            🏠 Coded Funds
         </h2>
 
-
         <button
-            onclick="window.location.href='dashboard.html'">
+            id="homeBtn">
 
-            ⬅️ Back to Dashboard
-
-        </button>
-
-
-        <br>
-        <br>
-
-
-        <button id="logoutBtn">
-
-            🚪 Logout
+            ⬅️ Back to Home
 
         </button>
 
     </div>
 
-
 </section>
 
 
-
-<!-- FIREBASE AUTHENTICATION -->
-
-<script type="module">
-
-import { auth } from "./firebase.js";
-
-import {
-    onAuthStateChanged,
-    signOut
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
-
-
-/* CHECK LOGIN */
-
-onAuthStateChanged(auth, (user) => {
-
-    if (!user) {
-
-        alert("Please login first.");
-
-        window.location.href =
-            "login.html";
-
-        return;
-
-    }
-
-
-    /* DISPLAY EMAIL */
-
-    document.getElementById("userEmail").textContent =
-        "👤 Logged in as: " + user.email;
-
-});
-
-
-/* LOGOUT */
-
-document
-    .getElementById("logoutBtn")
-    .addEventListener("click", async () => {
-
-        try {
-
-            await signOut(auth);
-
-            window.location.href =
-                "login.html";
-
-        } catch (error) {
-
-            alert(error.message);
-
-        }
-
-    });
-
-</script>
-
-
-
-<!-- WHATSAPP -->
+<!-- JAVASCRIPT -->
 
 <script>
 
-function contactWhatsApp() {
+const whatsappBtn =
+    document.getElementById("whatsappBtn");
+
+
+whatsappBtn.addEventListener("click", function () {
 
     const phone =
         "2349016186091";
 
 
     const message =
-        "Hello Coded Funds 👋%0A%0A" +
-        "I would like to subscribe to your VIP membership.%0A" +
+        "Hello Coded Funds 👋\n\n" +
+        "I would like to subscribe to your VIP membership.\n" +
         "Please send me the subscription details " +
         "and access information.";
 
@@ -209,16 +135,25 @@ function contactWhatsApp() {
         "https://wa.me/" +
         phone +
         "?text=" +
-        message;
+        encodeURIComponent(message);
 
 
     window.location.href =
         whatsappURL;
 
-}
+});
+
+
+document
+    .getElementById("homeBtn")
+    .addEventListener("click", function () {
+
+        window.location.href =
+            "index.html";
+
+    });
 
 </script>
-
 
 </body>
 
