@@ -8,10 +8,17 @@ const emailInput = document.getElementById("email");
 const passwordInput = document.getElementById("password");
 const loginBtn = document.getElementById("loginBtn");
 
+console.log("LOGIN JS LOADED");
+console.log("Firebase Auth:", auth);
+
 loginBtn.addEventListener("click", async () => {
+
+    console.log("LOGIN BUTTON CLICKED");
 
     const email = emailInput.value.trim();
     const password = passwordInput.value;
+
+    console.log("Email:", email);
 
     if (!email || !password) {
         alert("Please enter your email and password.");
@@ -23,11 +30,15 @@ loginBtn.addEventListener("click", async () => {
 
     try {
 
-        await signInWithEmailAndPassword(
+        console.log("Connecting to Firebase...");
+
+        const result = await signInWithEmailAndPassword(
             auth,
             email,
             password
         );
+
+        console.log("LOGIN SUCCESS:", result.user);
 
         alert("Login successful!");
 
@@ -35,17 +46,16 @@ loginBtn.addEventListener("click", async () => {
 
     } catch (error) {
 
-        console.error("Firebase Login Error:", error);
+        console.error("FULL FIREBASE ERROR:", error);
 
         alert(
-            "Login failed:\n\n" +
-            error.code +
-            "\n\n" +
-            error.message
+            "LOGIN ERROR\n\n" +
+            "Code: " + error.code +
+            "\n\nMessage: " + error.message
         );
 
         loginBtn.disabled = false;
-        loginBtn.textContent = "Login";
+        loginBtn.textContent = "🔐 Login";
     }
 
 });
