@@ -1,21 +1,54 @@
-console.log("LOGIN JS FILE LOADED");
+import { auth } from "./firebase.js";
 
+import {
+    signInWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
 const loginBtn = document.getElementById("loginBtn");
 
-console.log("BUTTON FOUND:", loginBtn);
+loginBtn.addEventListener("click", async () => {
 
-if (loginBtn) {
+    const email = emailInput.value.trim();
+    const password = passwordInput.value;
 
-    loginBtn.addEventListener("click", function () {
+    if (!email || !password) {
+        alert("Please enter your email and password.");
+        return;
+    }
 
-        alert("✅ THE LOGIN BUTTON IS WORKING!");
+    loginBtn.disabled = true;
+    loginBtn.textContent = "Logging in...";
 
-        console.log("LOGIN BUTTON CLICKED");
+    try {
 
-    });
+        await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
 
-} else {
+        alert("✅ Login successful!");
 
-    alert("❌ LOGIN BUTTON NOT FOUND");
+        window.location.href = "dashboard.html";
 
-}
+    } catch (error) {
+
+        console.error("Firebase Login Error:", error);
+
+        alert(
+            "❌ Login failed: " +
+            error.code +
+            "\n\n" +
+            error.message
+        );
+
+    } finally {
+
+        loginBtn.disabled = false;
+        loginBtn.textContent = "Login";
+
+    }
+
+});
