@@ -1,85 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login - VIP Football Predictions</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-body{
-    margin:0;
-    background:#0d1117;
-    font-family:Arial,sans-serif;
-    color:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-}
+    <title>Login - VIP Football Predictions</title>
 
-.login-box{
-    width:90%;
-    max-width:380px;
-    background:#161b22;
-    padding:30px;
-    border-radius:15px;
-    border:2px solid gold;
-}
+    <style>
+        body {
+            margin: 0;
+            background: #0d1117;
+            font-family: Arial, sans-serif;
+            color: white;
 
-h2{
-    text-align:center;
-    color:gold;
-}
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
-input{
-    width:100%;
-    padding:12px;
-    margin:10px 0;
-    border:none;
-    border-radius:8px;
-    font-size:16px;
-}
+            min-height: 100vh;
+        }
 
-button{
-    width:100%;
-    padding:12px;
-    background:gold;
-    color:black;
-    border:none;
-    border-radius:8px;
-    font-size:18px;
-    font-weight:bold;
-    cursor:pointer;
-}
+        .login-box {
+            width: 90%;
+            max-width: 380px;
+            background: #161b22;
 
-p{
-    text-align:center;
-}
+            padding: 30px;
 
-a{
-    color:gold;
-    text-decoration:none;
-}
-</style>
+            border-radius: 15px;
+            border: 2px solid gold;
+
+            box-sizing: border-box;
+        }
+
+        h2 {
+            text-align: center;
+            color: gold;
+            margin-bottom: 25px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+
+            margin: 10px 0;
+
+            border: none;
+            border-radius: 8px;
+
+            font-size: 16px;
+
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+
+            margin-top: 10px;
+
+            background: gold;
+            color: black;
+
+            border: none;
+            border-radius: 8px;
+
+            font-size: 18px;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        p {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        a {
+            color: gold;
+            text-decoration: none;
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="login-box">
+    <div class="login-box">
 
-<h2>👑 VIP Login</h2>
+        <h2>👑 VIP Login</h2>
 
-<input type="email" placeholder="Email Address">
+        <input
+            type="email"
+            id="email"
+            placeholder="Email Address"
+            autocomplete="email"
+        >
 
-<input type="password" placeholder="Password">
-    <button id="loginBtn">Login</button>
+        <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            autocomplete="current-password"
+        >
 
-<p>
-Don't have an account?<br>
-<a href="register.html">Create Account</a>
-</p>
+        <button
+            type="button"
+            id="loginBtn">
+            Login
+        </button>
 
-</div>
-<script type="module" src="login.js"></script>
+        <p>
+            Don't have an account?<br>
+            <a href="register.html">
+                Create Account
+            </a>
+        </p>
+
+    </div>
+
+    <script
+        type="module"
+        src="./login.js">
+    </script>
+
 </body>
+
 </html>
