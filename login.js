@@ -4,28 +4,43 @@ import {
     signInWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
-const email = document.querySelector('input[type="email"]');
-const password = document.querySelector('input[type="password"]');
-const button = document.querySelector("button");
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const loginBtn = document.getElementById("loginBtn");
 
-button.addEventListener("click", async () => {
+loginBtn.addEventListener("click", async () => {
+
+    const email = emailInput.value.trim();
+    const password = passwordInput.value;
+
+    if (!email || !password) {
+        alert("Please enter your email and password.");
+        return;
+    }
+
+    loginBtn.disabled = true;
+    loginBtn.textContent = "Logging in...";
 
     try {
 
         await signInWithEmailAndPassword(
             auth,
-            email.value.trim(),
-            password.value
+            email,
+            password
         );
 
-        alert("Login successful!");
+        alert("✅ Login successful!");
 
-        window.location.href = "dashboard.html";
+        window.location.href = "admin.html";
 
     } catch (error) {
 
-        alert(error.message);
+        console.error("Login error:", error);
 
+        alert("❌ Login failed: " + error.message);
+
+        loginBtn.disabled = false;
+        loginBtn.textContent = "Login";
     }
 
 });
