@@ -1,24 +1,18 @@
 import { auth } from "./firebase.js";
 
-import {
-    signInWithEmailAndPassword
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+console.log("✅ login.js loaded");
+console.log("Firebase auth:", auth);
 
+const loginBtn = document.getElementById("loginBtn");
 const emailInput = document.getElementById("email");
 const passwordInput = document.getElementById("password");
-const loginBtn = document.getElementById("loginBtn");
-
-console.log("LOGIN JS LOADED");
-console.log("Firebase Auth:", auth);
 
 loginBtn.addEventListener("click", async () => {
 
-    console.log("LOGIN BUTTON CLICKED");
+    console.log("✅ Login button clicked");
 
     const email = emailInput.value.trim();
     const password = passwordInput.value;
-
-    console.log("Email:", email);
 
     if (!email || !password) {
         alert("Please enter your email and password.");
@@ -30,7 +24,7 @@ loginBtn.addEventListener("click", async () => {
 
     try {
 
-        console.log("Connecting to Firebase...");
+        console.log("Attempting Firebase login...");
 
         const result = await signInWithEmailAndPassword(
             auth,
@@ -38,7 +32,7 @@ loginBtn.addEventListener("click", async () => {
             password
         );
 
-        console.log("LOGIN SUCCESS:", result.user);
+        console.log("✅ Firebase login successful:", result.user);
 
         alert("Login successful!");
 
@@ -46,12 +40,15 @@ loginBtn.addEventListener("click", async () => {
 
     } catch (error) {
 
-        console.error("FULL FIREBASE ERROR:", error);
+        console.error("❌ Firebase Login Error");
+        console.error("Code:", error.code);
+        console.error("Message:", error.message);
 
         alert(
-            "LOGIN ERROR\n\n" +
+            "LOGIN FAILED\n\n" +
             "Code: " + error.code +
-            "\n\nMessage: " + error.message
+            "\n\n" +
+            "Message: " + error.message
         );
 
         loginBtn.disabled = false;
@@ -59,3 +56,5 @@ loginBtn.addEventListener("click", async () => {
     }
 
 });
+
+But there is one missing import in that test. Use this complete version instead:
