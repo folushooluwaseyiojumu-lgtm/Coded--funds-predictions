@@ -12,9 +12,13 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 import {
-    onAuthStateChanged,
     signOut
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+
+// ===============================
+// EDITING MATCH
+// ===============================
 
 let editingMatchId = null;
 
@@ -57,7 +61,6 @@ document
                 }
             );
 
-
             alert("✅ Countdown saved successfully!");
 
         } catch (error) {
@@ -68,7 +71,6 @@ document
                 "❌ Could not save countdown:\n" +
                 error.message
             );
-
         }
 
     });
