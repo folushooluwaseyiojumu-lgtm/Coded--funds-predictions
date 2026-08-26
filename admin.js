@@ -1160,3 +1160,5 @@ function clearTipForm() {
 // ==========================================
 
 loadFreeTips();
+loadMatches();
+loadCountdown();
