@@ -1,369 +1,294 @@
-<!DOCTYPE html>  <html lang="en">  <head>  <meta charset="UTF-8">  
+<!DOCTYPE html>
+<html lang="en">
 
-<meta name="viewport"  
-      content="width=device-width, initial-scale=1.0">  
+<head>
 
-<title>Coded Funds Admin Panel</title>  
+    <meta charset="UTF-8">
 
-<link rel="stylesheet" href="style.css">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-</head>  <body>  <header class="navbar">  <div class="logo">  
-    ⚽ Coded Funds Admin  
-</div>  
+    <title>Coded Funds Admin Panel</title>
 
-<nav>  
+    <link rel="stylesheet" href="style.css">
 
-    <a href="index.html">  
-        🏠 Home  
-    </a>  
+</head>
 
-    <a href="admin.html">  
-        ⚙️ Admin  
-    </a>  
+<body>
 
-</nav>
+<header class="navbar">
 
-</header>  <main class="admin-container">  <div class="admin-header">  
+    <div class="logo">
+        ⚽ Coded Funds Admin
+    </div>
 
-    <h1>  
-        ⚙️ Admin Dashboard  
-    </h1>  
+    <nav>
 
-    <p>  
-        Manage your football content from one place.  
-    </p>  
+        <a href="index.html">
+            🏠 Home
+        </a>
 
-</div>  
+        <a href="admin.html">
+            ⚙️ Admin
+        </a>
 
+    </nav>
 
-<!-- UPCOMING MATCH -->  
+</header>
 
-<section class="admin-card">  
 
-    <h2>  
-        ⏳ Next Match Countdown  
-    </h2>  
+<main class="admin-container">
 
-    <label>  
-        Home Team  
-    </label>  
+    <div class="admin-header">
 
-    <input  
-        type="text"  
-        id="homeTeam"  
-        placeholder="Example: Arsenal"  
-    >  
+        <h1>
+            ⚙️ Admin Dashboard
+        </h1>
 
+        <p>
+            Manage your football content from one place.
+        </p>
 
-    <label>  
-        Away Team  
-    </label>  
+    </div>
 
-    <input  
-        type="text"  
-        id="awayTeam"  
-        placeholder="Example: Chelsea"  
-    >  
 
+    <!-- UPCOMING MATCH -->
 
-    <label>  
-        Match Date & Time  
-    </label>  
+    <section class="admin-card">
 
-    <input  
-        type="datetime-local"  
-        id="matchDate"  
-    >  
+        <h2>
+            ⏳ Next Match Countdown
+        </h2>
 
+        <label>
+            Home Team
+        </label>
 
-    <button id="saveCountdownBtn">  
-        💾 Save Countdown  
-    </button>  
+        <input
+            type="text"
+            id="homeTeam"
+            placeholder="Example: Arsenal"
+        >
 
-</section>  
 
+        <label>
+            Away Team
+        </label>
 
+        <input
+            type="text"
+            id="awayTeam"
+            placeholder="Example: Chelsea"
+        >
 
-<!-- ADD MATCH -->  
 
-<section class="admin-card">  
+        <label>
+            Match Date & Time
+        </label>
 
-    <h2>  
-        ⚽ Add Match  
-    </h2>  
+        <input
+            type="datetime-local"
+            id="matchDate"
+        >
 
-    <label>  
-        Home Team  
-    </label>  
 
-    <input  
-        type="text"  
-        id="matchHome"  
-        placeholder="Example: Liverpool"  
-    >  
+        <button id="saveCountdownBtn">
+            💾 Save Countdown
+        </button>
 
+    </section>
 
-    <label>  
-        Away Team  
-    </label>  
 
-    <input  
-        type="text"  
-        id="matchAway"  
-        placeholder="Example: Everton"  
-    >  
 
+    <!-- ADD MATCH -->
 
-    <label>  
-        Match Status  
-    </label>  
+    <section class="admin-card">
 
-    <select id="matchStatus">  
+        <h2>
+            ⚽ Add Match
+        </h2>
 
-        <option value="upcoming">  
-            🕒 Upcoming  
-        </option>  
+        <label>
+            Home Team
+        </label>
 
-        <option value="live">  
-            🔴 Live  
-        </option>  
+        <input
+            type="text"
+            id="matchHome"
+            placeholder="Example: Liverpool"
+        >
 
-        <option value="finished">  
-            🏁 Finished  
-        </option>  
 
-    </select>  
+        <label>
+            Away Team
+        </label>
 
+        <input
+            type="text"
+            id="matchAway"
+            placeholder="Example: Everton"
+        >
 
-    <label>  
-        Match Time  
-    </label>  
 
-    <input  
-        type="text"  
-        id="matchTime"  
-        placeholder="Example: 20:00"  
-    >  
+        <label>
+            Match Status
+        </label>
 
+        <select id="matchStatus">
 
-    <label>  
-        Score  
-    </label>  
+            <option value="upcoming">
+                🕒 Upcoming
+            </option>
 
-    <input  
-        type="text"  
-        id="matchScore"  
-        placeholder="Example: 2 - 1"  
-    >  
+            <option value="live">
+                🔴 Live
+            </option>
 
+            <option value="finished">
+                🏁 Finished
+            </option>
 
-    <button id="addMatchBtn">  
-        ➕ Add Match  
-    </button>  
+        </select>
 
-</section>  
 
+        <label>
+            Match Time
+        </label>
 
+        <input
+            type="text"
+            id="matchTime"
+            placeholder="Example: 20:00"
+        >
 
-<!-- RECENT RESULT -->  
 
-<section class="admin-card">  
+        <label>
+            Score
+        </label>
 
-    <h2>  
-        🏆 Add Match Result  
-    </h2>  
+        <input
+            type="text"
+            id="matchScore"
+            placeholder="Example: 2 - 1"
+        >
 
-    <label>  
-        Home Team  
-    </label>  
 
-    <input  
-        type="text"  
-        id="resultHome"  
-        placeholder="Example: Liverpool"  
-    >  
+        <button id="addMatchBtn">
+            ➕ Add Match
+        </button>
 
+    </section>
 
-    <label>  
-        Away Team  
-    </label>  
 
-    <input  
-        type="text"  
-        id="resultAway"  
-        placeholder="Example: Everton"  
-    >  
 
+    <!-- RECENT RESULT -->
 
-    <label>  
-        Final Score  
-    </label>  
+    <section class="admin-card">
 
-    <input  
-        type="text"  
-        id="resultScore"  
-        placeholder="Example: 3 - 1"  
-    >  
+        <h2>
+            🏆 Add Match Result
+        </h2>
 
+        <label>
+            Home Team
+        </label>
 
-    <label>  
-        Match Information  
-    </label>  
+        <input
+            type="text"
+            id="resultHome"
+            placeholder="Example: Liverpool"
+        >
 
-    <input  
-        type="text"  
-        id="resultInfo"  
-        placeholder="Example: Match completed"  
-    >  
 
+        <label>
+            Away Team
+        </label>
 
-    <button id="addResultBtn">  
-        🏆 Add Result  
-    </button>  
+        <input
+            type="text"
+            id="resultAway"
+            placeholder="Example: Everton"
+        >
 
-</section>
 
-<!-- ==========================================  
-     FREE TIPS MANAGER  
-========================================== -->  <section class="admin-card">  <h2>  
-    ⚽ Free Tips Manager  
-</h2>  
+        <label>
+            Final Score
+        </label>
 
-<label>  
-    Home Team  
-</label>  
+        <input
+            type="text"
+            id="resultScore"
+            placeholder="Example: 3 - 1"
+        >
 
-<input  
-    type="text"  
-    id="tipHome"  
-    placeholder="Example: Arsenal"  
->  
 
+        <label>
+            Match Information
+        </label>
 
-<label>  
-    Away Team  
-</label>  
+        <input
+            type="text"
+            id="resultInfo"
+            placeholder="Example: Match completed"
+        >
 
-<input  
-    type="text"  
-    id="tipAway"  
-    placeholder="Example: Chelsea"  
->  
 
+        <button id="addResultBtn">
+            🏆 Add Result
+        </button>
 
-<label>  
-    Prediction  
-</label>  
+    </section>
 
-<input  
-    type="text"  
-    id="tipPrediction"  
-    placeholder="Example: Arsenal Win"  
->  
 
 
-<label>  
-    Odds  
-</label>  
+    <!-- CURRENT CONTENT -->
 
-<input  
-    type="text"  
-    id="tipOdds"  
-    placeholder="Example: 1.85"  
->  
+    <section class="admin-card">
 
+        <h2>
+            📋 Current Matches
+        </h2>
 
-<label>  
-    Match Date</label>  
+        <div id="matchesList">
 
-<input  
-    type="date"  
-    id="tipDate"  
->  
+            <p>
+                Loading matches...
+            </p>
 
+        </div>
 
-<label>  
-    Status  
-</label>  
+    </section>
 
-<select id="tipStatus">  
 
-    <option value="pending">  
-        ⏳ Pending  
-    </option>  
 
-    <option value="won">  
-        ✅ Won  
-    </option>  
+    <!-- LOGOUT -->
 
-    <option value="lost">  
-        ❌ Lost  
-    </option>  
+    <section class="admin-card">
 
-</select>  
+        <button
+            id="logoutBtn"
+            class="logout-btn">
 
+            🚪 Logout
 
-<button id="addTipBtn">  
+        </button>
 
-    ➕ Publish Free Tip  
+    </section>
 
-</button>  
+</main>
 
 
-<hr>  
+<footer>
 
+    <p>
+        © 2026 Coded Funds. All Rights Reserved.
+    </p>
 
-<h3>  
-    📋 Published Free Tips  
-</h3>  
+</footer>
 
 
-<div id="tipsList">  
+<script type="module" src="admin.js"></script>
 
-    <p>  
-        Loading free tips...  
-    </p>  
+</body>
 
-</div>  
-
-</section>  
-
-<!-- CURRENT CONTENT -->  
-
-<section class="admin-card">  
-
-    <h2>  
-        📋 Current Matches  
-    </h2>  
-
-    <div id="matchesList">  
-
-        <p>  
-            Loading matches...  
-        </p>  
-
-    </div>  
-
-</section>  
-
-
-
-<!-- LOGOUT -->  
-
-<section class="admin-card">  
-
-    <button  
-        id="logoutBtn"  
-        class="logout-btn">  
-
-        🚪 Logout  
-
-    </button>  
-
-</section>
-
-</main>  <footer>  <p>  
-    © 2026 Coded Funds. All Rights Reserved.  
-</p>
-
-</footer>  <script type="module" src="admin.js"></script>  </body>  </html>
+</html>
