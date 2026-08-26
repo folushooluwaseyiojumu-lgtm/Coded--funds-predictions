@@ -1098,4 +1098,179 @@ async function loadFreeTips() {
                                 button.dataset.id
                             );
 
+                    );
+
+                }
+            );
+
+
+    } catch (error) {
+
+        console.error(
+            "Load free tips error:",
+            error
+        );
+
+        list.innerHTML =
+            "<p>❌ Unable to load free tips.</p>";
+
+    }
+
+}
+
+
+// ==========================================
+// EDIT FREE TIP
+// ==========================================
+
+async function editFreeTip(id) {
+
+    try {
+
+        const tipDoc =
+            await getDoc(
+                doc(
+                    db,
+                    "freeTips",
+                    id
+                )
+            );
+
+
+        if (!tipDoc.exists()) {
+
+            alert(
+                "This free tip no longer exists."
+            );
+
+            return;
+        }
+
+
+        const data =
+            tipDoc.data();
+
+
+        document.getElementById(
+            "tipHome"
+        ).value =
+            data.home || "";
+
+
+        document.getElementById(
+            "tipAway"
+        ).value =
+            data.away || "";
+
+
+        document.getElementById(
+            "tipPrediction"
+        ).value =
+            data.prediction || "";
+
+
+        document.getElementById(
+            "tipOdds"
+        ).value =
+            data.odds || "";
+
+
+        document.getElementById(
+            "tipDate"
+        ).value =
+            data.date || "";
+
+
+        document.getElementById(
+            "tipStatus"
+        ).value =
+            data.status || "pending";
+
+
+        editingTipId = id;
+
+
+        document.getElementById(
+            "addTipBtn"
+        ).textContent =
+            "💾 Update Free Tip";
+
+
+        document.getElementById(
+            "tipHome"
+        ).scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+
+    } catch (error) {
+
+        console.error(
+            "Edit tip error:",
+            error
+        );
+
+        alert(
+            "❌ Could not load free tip:\n" +
+            error.message
+        );
+
+    }
+
+}
+
+
+// ==========================================
+// DELETE FREE TIP
+// ==========================================
+
+async function deleteFreeTip(id) {
+
+    if (
+        !confirm(
+            "Are you sure you want to delete this free tip?"
+        )
+    ) {
+
+        return;
+    }
+
+
+    try {
+
+        await deleteDoc(
+            doc(
+                db,
+                "freeTips",
+                id
+            )
+        );
+
+
+        alert(
+            "✅ Free tip deleted."
+        );
+
+
+        loadFreeTips();
+
+
+    } catch (error) {
+
+        console.error(
+            "Delete tip error:",
+            error
+        );
+
+        alert(
+            "❌ Could not delete free tip:\n" +
+            error.message
+        );
+
+    }
+
+}
+
+
               
