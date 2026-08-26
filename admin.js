@@ -1271,6 +1271,128 @@ async function deleteFreeTip(id) {
     }
 
 }
+// ==========================================
+// CLEAR FREE TIP FORM
+// ==========================================
 
+function clearTipForm() {
+
+    document.getElementById(
+        "tipHome"
+    ).value = "";
+
+    document.getElementById(
+        "tipAway"
+    ).value = "";
+
+    document.getElementById(
+        "tipPrediction"
+    ).value = "";
+
+    document.getElementById(
+        "tipOdds"
+    ).value = "";
+
+    document.getElementById(
+        "tipDate"
+    ).value = "";
+
+    document.getElementById(
+        "tipStatus"
+    ).value = "pending";
+
+}
+
+
+// ==========================================
+// LOAD COUNTDOWN
+// ==========================================
+
+async function loadCountdown() {
+
+    try {
+
+        const countdownDoc =
+            await getDoc(
+                doc(
+                    db,
+                    "siteSettings",
+                    "countdown"
+                )
+            );
+
+
+        if (!countdownDoc.exists()) {
+
+            console.log(
+                "No countdown saved yet."
+            );
+
+            return;
+        }
+
+
+        const data =
+            countdownDoc.data();
+
+
+        document.getElementById(
+            "homeTeam"
+        ).value =
+            data.homeTeam || "";
+
+
+        document.getElementById(
+            "awayTeam"
+        ).value =
+            data.awayTeam || "";
+
+
+        document.getElementById(
+            "matchDate"
+        ).value =
+            data.matchDate || "";
+
+
+    } catch (error) {
+
+        console.error(
+            "Load countdown error:",
+            error
+        );
+
+    }
+
+}
+
+
+// ==========================================
+// LOGOUT
+// ==========================================
+
+async function logoutAdmin() {
+
+    try {
+
+        await signOut(auth);
+
+        window.location.href =
+            "login.html";
+
+    } catch (error) {
+
+        console.error(
+            "Logout error:",
+            error
+        );
+
+        alert(
+            "❌ Could not logout:\n" +
+            error.message
+        );
+
+    }
+
+}
 
               
