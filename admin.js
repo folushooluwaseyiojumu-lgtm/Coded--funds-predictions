@@ -17,43 +17,6 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 
-// ===============================
-// ADMIN EMAIL
-// ===============================
-
-const ADMIN_EMAIL = "folushooluwaseyiojumu@gmail.com";
-
-
-// ===============================
-// CHECK ADMIN LOGIN
-// ===============================
-
-onAuthStateChanged(auth, (user) => {
-
-    if (!user) {
-
-        alert("Please login first.");
-
-        window.location.href = "login.html";
-
-        return;
-    }
-
-    if (user.email !== ADMIN_EMAIL) {
-
-        alert("Access denied. Admin only.");
-
-        window.location.href = "index.html";
-
-        return;
-    }
-
-    console.log("Admin logged in:", user.email);
-
-    loadMatches();
-    loadCountdown();
-
-});
 
 
 // ===============================
