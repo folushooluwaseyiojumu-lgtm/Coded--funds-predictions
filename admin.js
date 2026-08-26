@@ -484,7 +484,101 @@ async function loadMatches() {
     }
 
                 }
+// ===============================
+// EDIT MATCH
+// ===============================
 
+async function editMatch(id) {
+
+    try {
+
+        const matchDoc =
+            await getDoc(
+                doc(db, "matches", id)
+            );
+
+
+        if (!matchDoc.exists()) {
+
+            alert("This match no longer exists.");
+
+            return;
+        }
+
+
+        const data =
+            matchDoc.data();
+
+
+        document.getElementById(
+            "matchHome"
+        ).value =
+            data.home || "";
+
+
+        document.getElementById(
+            "matchAway"
+        ).value =
+            data.away || "";
+
+
+        document.getElementById(
+            "matchStatus"
+        ).value =
+            data.status || "upcoming";
+
+
+        document.getElementById(
+            "matchTime"
+        ).value =
+            data.time || "";
+
+
+        document.getElementById(
+            "matchScore"
+        ).value =
+            data.score || "";
+
+
+        // IMPORTANT
+        // Remember which match we are editing
+
+        editingMatchId = id;
+
+
+        // Change button
+
+        document.getElementById(
+            "addMatchBtn"
+        ).textContent =
+            "💾 Update Match";
+
+
+        // Scroll to match form
+
+        document.getElementById(
+            "matchHome"
+        ).scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+
+    } catch (error) {
+
+        console.error(
+            "Edit match error:",
+            error
+        );
+
+        alert(
+            "❌ Could not load match:\n\n" +
+            error.message
+        );
+
+    }
+
+            }
 // ===============================
 // DELETE MATCH
 // ===============================
