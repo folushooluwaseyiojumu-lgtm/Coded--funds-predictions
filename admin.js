@@ -1,4 +1,4 @@
-import { db } from "./firebase.js";
+import { db, auth } from "./firebase.js";
 
 import {
     collection,
@@ -11,322 +11,262 @@ import {
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-
-// ==========================================
-// PAGE READY
-// ==========================================
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    loadMatches();
-    loadCountdown();
-
-    // Only attach listeners when the buttons exist
-    const saveCountdownBtn =
-        document.getElementById("saveCountdownBtn");
-
-    const addMatchBtn =
-        document.getElementById("addMatchBtn");
-
-    const addResultBtn =
-        document.getElementById("addResultBtn");
+import {
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 
-    if (saveCountdownBtn) {
-        saveCountdownBtn.addEventListener(
-            "click",
-            saveCountdown
-        );
-    }
+// ===============================
+// ADMIN EMAIL
+// ===============================
+
+const ADMIN_EMAIL = "folushooluwaseyiojumu@gmail.com";
 
 
-    if (addMatchBtn) {
-        addMatchBtn.addEventListener(
-            "click",
-            addMatch
-        );
-    }
+// ===============================
+// CHECK ADMIN LOGIN
+// ===============================
 
+onAuthStateChanged(auth, (user) => {
 
-    if (addResultBtn) {
-        addResultBtn.addEventListener(
-            "click",
-            addResult
-        );
-    }
+    if (!user) {
 
-});
+        alert("Please login first.");
 
-
-// ==========================================
-// SAVE COUNTDOWN
-// ==========================================
-
-async function saveCountdown() {
-
-    const homeTeam =
-        document.getElementById("homeTeam")
-            .value
-            .trim();
-
-    const awayTeam =
-        document.getElementById("awayTeam")
-            .value
-            .trim();
-
-    const matchDate =
-        document.getElementById("matchDate")
-            .value;
-
-
-    if (!homeTeam || !awayTeam || !matchDate) {
-
-        alert(
-            "Please fill in all countdown fields."
-        );
+        window.location.href = "login.html";
 
         return;
     }
 
+    if (user.email !== ADMIN_EMAIL) {
 
-    try {
+        alert("Access denied. Admin only.");
 
-        await setDoc(
-            doc(
-                db,
-                "siteSettings",
-                "countdown"
-            ),
-            {
-                homeTeam: homeTeam,
-                awayTeam: awayTeam,
-                matchDate: matchDate,
-                updatedAt: serverTimestamp()
-            }
-        );
+        window.location.href = "index.html";
 
-
-        alert(
-            "✅ Countdown saved successfully!"
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            "Countdown error:",
-            error
-        );
-
-        alert(
-            "❌ Could not save countdown:\n\n" +
-            error.message
-        );
-
+        return;
     }
 
-}
+    console.log("Admin logged in:", user.email);
+
+    loadMatches();
+    loadCountdown();
+
+});
 
 
-// ==========================================
-// LOAD COUNTDOWN
-// ==========================================
+// ===============================
+// SAVE COUNTDOWN
+// ===============================
 
-async function loadCountdown() {
+document
+    .getElementById("saveCountdownBtn")
+    .addEventListener("click", async () => {
 
-    try {
+        const homeTeam =
+            document.getElementById("homeTeam").value.trim();
 
-        const countdownDoc =
-            await getDoc(
-                doc(
-                    db,
-                    "siteSettings",
-                    "countdown"
-                )
+        const awayTeam =
+            document.getElementById("awayTeam").value.trim();
+
+        const matchDate =
+            document.getElementById("matchDate").value;
+
+
+        if (!homeTeam || !awayTeam || !matchDate) {
+
+            alert("Please fill in all countdown fields.");
+
+            return;
+        }
+
+
+        try {
+
+            await setDoc(
+                doc(db, "siteSettings", "countdown"),
+                {
+                    homeTeam: homeTeam,
+                    awayTeam: awayTeam,
+                    matchDate: matchDate,
+                    updatedAt: serverTimestamp()
+                }
             );
 
 
-        if (!countdownDoc.exists()) {
+            alert("✅ Countdown saved successfully!");
 
-            console.log(
-                "No countdown saved yet."
+        } catch (error) {
+
+            console.error("Countdown error:", error);
+
+            alert(
+                "❌ Could not save countdown:\n" +
+                error.message
+            );
+
+        }
+
+    });
+
+
+// ===============================
+// ADD MATCH
+// ===============================
+
+document
+    .getElementById("addMatchBtn")
+    .addEventListener("click", async () => {
+
+        const home =
+            document.getElementById("matchHome").value.trim();
+
+        const away =
+            document.getElementById("matchAway").value.trim();
+
+        const status =
+            document.getElementById("matchStatus").value;
+
+        const time =
+            document.getElementById("matchTime").value.trim();
+
+        const score =
+            document.getElementById("matchScore").value.trim();
+
+
+        if (!home || !away) {
+
+            alert("Please enter both teams.");
+
+            return;
+        }
+
+
+        try {
+
+            await addDoc(
+                collection(db, "matches"),
+                {
+                    home: home,
+                    away: away,
+                    status: status,
+                    time: time,
+                    score: score,
+                    createdAt: serverTimestamp()
+                }
+            );
+
+
+            alert("✅ Match added successfully!");
+
+
+            document.getElementById("matchHome").value = "";
+            document.getElementById("matchAway").value = "";
+            document.getElementById("matchTime").value = "";
+            document.getElementById("matchScore").value = "";
+
+
+            loadMatches();
+
+
+        } catch (error) {
+
+            console.error("Match error:", error);
+
+            alert(
+                "❌ Could not add match:\n" +
+                error.message
+            );
+
+        }
+
+    });
+
+
+// ===============================
+// ADD RESULT
+// ===============================
+
+document
+    .getElementById("addResultBtn")
+    .addEventListener("click", async () => {
+
+        const home =
+            document.getElementById("resultHome").value.trim();
+
+        const away =
+            document.getElementById("resultAway").value.trim();
+
+        const score =
+            document.getElementById("resultScore").value.trim();
+
+        const info =
+            document.getElementById("resultInfo").value.trim();
+
+
+        if (!home || !away || !score) {
+
+            alert(
+                "Please enter the teams and final score."
             );
 
             return;
         }
 
 
-        const data =
-            countdownDoc.data();
+        try {
+
+            await addDoc(
+                collection(db, "results"),
+                {
+                    home: home,
+                    away: away,
+                    score: score,
+                    info: info,
+                    createdAt: serverTimestamp()
+                }
+            );
 
 
-        const homeTeam =
-            document.getElementById("homeTeam");
-
-        const awayTeam =
-            document.getElementById("awayTeam");
-
-        const matchDate =
-            document.getElementById("matchDate");
+            alert("✅ Result added successfully!");
 
 
-        if (homeTeam) {
-            homeTeam.value =
-                data.homeTeam || "";
+            document.getElementById("resultHome").value = "";
+            document.getElementById("resultAway").value = "";
+            document.getElementById("resultScore").value = "";
+            document.getElementById("resultInfo").value = "";
+
+
+        } catch (error) {
+
+            console.error("Result error:", error);
+
+            alert(
+                "❌ Could not add result:\n" +
+                error.message
+            );
+
         }
 
-
-        if (awayTeam) {
-            awayTeam.value =
-                data.awayTeam || "";
-        }
+    });
 
 
-        if (matchDate) {
-            matchDate.value =
-                data.matchDate || "";
-        }
-
-
-    } catch (error) {
-
-        console.error(
-            "Could not load countdown:",
-            error
-        );
-
-    }
-
-}
-
-
-// ==========================================
-// ADD MATCH
-// ==========================================
-
-async function addMatch() {
-
-    const home =
-        document.getElementById("matchHome")
-            .value
-            .trim();
-
-    const away =
-        document.getElementById("matchAway")
-            .value
-            .trim();
-
-    const status =
-        document.getElementById("matchStatus")
-            .value;
-
-    const time =
-        document.getElementById("matchTime")
-            .value
-            .trim();
-
-    const score =
-        document.getElementById("matchScore")
-            .value
-            .trim();
-
-
-    if (!home || !away) {
-
-        alert(
-            "Please enter both teams."
-        );
-
-        return;
-    }
-
-
-    try {
-
-        await addDoc(
-            collection(
-                db,
-                "matches"
-            ),
-            {
-                home: home,
-                away: away,
-                status: status,
-                time: time,
-                score: score,
-                createdAt:
-                    serverTimestamp()
-            }
-        );
-
-
-        alert(
-            "✅ Match added successfully!"
-        );
-
-
-        document.getElementById(
-            "matchHome"
-        ).value = "";
-
-        document.getElementById(
-            "matchAway"
-        ).value = "";
-
-        document.getElementById(
-            "matchTime"
-        ).value = "";
-
-        document.getElementById(
-            "matchScore"
-        ).value = "";
-
-
-        loadMatches();
-
-
-    } catch (error) {
-
-        console.error(
-            "Add match error:",
-            error
-        );
-
-        alert(
-            "❌ Could not add match:\n\n" +
-            error.message
-        );
-
-    }
-
-}
-
-
-// ==========================================
+// ===============================
 // LOAD MATCHES
-// ==========================================
+// ===============================
 
 async function loadMatches() {
 
     const list =
-        document.getElementById(
-            "matchesList"
-        );
-
-
-    if (!list) {
-        return;
-    }
+        document.getElementById("matchesList");
 
 
     try {
 
         const snapshot =
             await getDocs(
-                collection(
-                    db,
-                    "matches"
-                )
+                collection(db, "matches")
             );
 
 
@@ -342,102 +282,66 @@ async function loadMatches() {
         }
 
 
-        snapshot.forEach(
-            (matchDoc) => {
+        snapshot.forEach((matchDoc) => {
 
-                const data =
-                    matchDoc.data();
+            const data = matchDoc.data();
 
 
-                const card =
-                    document.createElement(
-                        "div"
-                    );
+            const card =
+                document.createElement("div");
+
+            card.className = "match-card";
 
 
-                card.className =
-                    "match-card";
+            card.innerHTML = `
+
+                <h3>
+                    ${data.home} vs ${data.away}
+                </h3>
+
+                <p>
+                    Status: ${data.status}
+                </p>
+
+                <p>
+                    Time: ${data.time || "Not set"}
+                </p>
+
+                <p>
+                    Score: ${data.score || "Not available"}
+                </p>
+
+                <button
+                    class="delete-match"
+                    data-id="${matchDoc.id}">
+
+                    🗑️ Delete
+
+                </button>
+
+            `;
 
 
-                card.innerHTML = `
+            list.appendChild(card);
 
-                    <h3>
-                        ${escapeHTML(
-                            data.home || ""
-                        )}
-                        vs
-                        ${escapeHTML(
-                            data.away || ""
-                        )}
-                    </h3>
-
-                    <p>
-                        Status:
-                        ${escapeHTML(
-                            data.status || ""
-                        )}
-                    </p>
-
-                    <p>
-                        Time:
-                        ${escapeHTML(
-                            data.time || "Not set"
-                        )}
-                    </p>
-
-                    <p>
-                        Score:
-                        ${escapeHTML(
-                            data.score ||
-                            "Not available"
-                        )}
-                    </p>
-
-                    <button
-                        class="delete-match"
-                        data-id="${matchDoc.id}">
-
-                        🗑️ Delete
-
-                    </button>
-
-                `;
-
-
-                list.appendChild(card);
-
-            }
-        );
+        });
 
 
         document
-            .querySelectorAll(
-                ".delete-match"
-            )
-            .forEach(
-                (button) => {
+            .querySelectorAll(".delete-match")
+            .forEach((button) => {
 
-                    button.addEventListener(
-                        "click",
-                        () => {
+                button.addEventListener(
+                    "click",
+                    () => deleteMatch(button.dataset.id)
+                );
 
-                            deleteMatch(
-                                button.dataset.id
-                            );
-
-                        }
-                    );
-
-                }
-            );
+            });
 
 
     } catch (error) {
 
-        console.error(
-            "Load matches error:",
-            error
-        );
+        console.error("Load matches error:", error);
 
         list.innerHTML =
             "<p>❌ Unable to load matches.</p>";
@@ -447,19 +351,19 @@ async function loadMatches() {
 }
 
 
-// ==========================================
+// ===============================
 // DELETE MATCH
-// ==========================================
+// ===============================
 
 async function deleteMatch(id) {
 
-    const confirmed =
+    const confirmDelete =
         confirm(
             "Are you sure you want to delete this match?"
         );
 
 
-    if (!confirmed) {
+    if (!confirmDelete) {
         return;
     }
 
@@ -467,31 +371,21 @@ async function deleteMatch(id) {
     try {
 
         await deleteDoc(
-            doc(
-                db,
-                "matches",
-                id
-            )
+            doc(db, "matches", id)
         );
 
 
-        alert(
-            "✅ Match deleted."
-        );
-
+        alert("✅ Match deleted.");
 
         loadMatches();
 
 
     } catch (error) {
 
-        console.error(
-            "Delete match error:",
-            error
-        );
+        console.error("Delete error:", error);
 
         alert(
-            "❌ Could not delete match:\n\n" +
+            "❌ Could not delete match:\n" +
             error.message
         );
 
@@ -500,93 +394,49 @@ async function deleteMatch(id) {
 }
 
 
-// ==========================================
-// ADD MATCH RESULT
-// ==========================================
+// ===============================
+// LOAD COUNTDOWN
+// ===============================
 
-async function addResult() {
-
-    const home =
-        document.getElementById("resultHome")
-            .value
-            .trim();
-
-    const away =
-        document.getElementById("resultAway")
-            .value
-            .trim();
-
-    const score =
-        document.getElementById("resultScore")
-            .value
-            .trim();
-
-    const info =
-        document.getElementById("resultInfo")
-            .value
-            .trim();
-
-
-    if (!home || !away || !score) {
-
-        alert(
-            "Please enter the teams and final score."
-        );
-
-        return;
-    }
-
+async function loadCountdown() {
 
     try {
 
-        await addDoc(
-            collection(
-                db,
-                "results"
-            ),
-            {
-                home: home,
-                away: away,
-                score: score,
-                info: info,
-                createdAt:
-                    serverTimestamp()
-            }
-        );
+        const countdownDoc =
+            await getDoc(
+                doc(db, "siteSettings", "countdown")
+            );
 
 
-        alert(
-            "✅ Result added successfully!"
-        );
+        if (!countdownDoc.exists()) {
+
+            console.log("No countdown saved yet.");
+
+            return;
+        }
 
 
-        document.getElementById(
-            "resultHome"
-        ).value = "";
+        const data =
+            countdownDoc.data();
 
-        document.getElementById(
-            "resultAway"
-        ).value = "";
 
-        document.getElementById(
-            "resultScore"
-        ).value = "";
+        document.getElementById("homeTeam").value =
+            data.homeTeam || "";
 
-        document.getElementById(
-            "resultInfo"
-        ).value = "";
+
+        document.getElementById("awayTeam").value =
+            data.awayTeam || "";
+
+
+        document.getElementById("matchDate").value =
+            data.matchDate || "";
 
 
     } catch (error) {
 
         console.error(
-            "Add result error:",
+            "Could not load countdown:",
             error
-        );
-
-        alert(
-            "❌ Could not add result:\n\n" +
-            error.message
         );
 
     }
@@ -594,17 +444,30 @@ async function addResult() {
 }
 
 
-// ==========================================
-// ESCAPE HTML
-// ==========================================
+// ===============================
+// LOGOUT
+// ===============================
 
-function escapeHTML(value) {
+document
+    .getElementById("logoutBtn")
+    .addEventListener("click", async () => {
 
-    return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+        try {
 
-}
+            await signOut(auth);
+
+            window.location.href =
+                "login.html";
+
+        } catch (error) {
+
+            console.error("Logout error:", error);
+
+            alert(
+                "Could not logout:\n" +
+                error.message
+            );
+
+        }
+
+    });
