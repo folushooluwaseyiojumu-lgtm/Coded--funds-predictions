@@ -195,37 +195,6 @@ document
     });
 
             // =========================
-            // UPDATE EXISTING MATCH
-            // =========================
-
-            if (editingMatchId) {
-
-                await setDoc(
-                    doc(db, "matches", editingMatchId),
-                    {
-                        home: home,
-                        away: away,
-                        status: status,
-                        time: time,
-                        score: score,
-                        updatedAt: serverTimestamp()
-                    },
-                    {
-                        merge: true
-                    }
-                );
-
-                alert("✅ Match updated successfully!");
-
-                editingMatchId = null;
-
-                document.getElementById(
-                    "addMatchBtn"
-                ).textContent = "➕ Add Match";
-
-            }
-
-            // =========================
             // CREATE NEW MATCH
             // =========================
 
