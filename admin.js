@@ -302,36 +302,19 @@ async function addMatch() {
 }
 
 
-// ==========================================
-// LOAD MATCHES
-// ==========================================
-
 async function loadMatches() {
 
-    const list =
-        document.getElementById(
-            "matchesList"
-        );
+    const list = document.getElementById("matchesList");
 
-
-    if (!list) {
-        return;
-    }
-
+    if (!list) return;
 
     try {
 
-        const snapshot =
-            await getDocs(
-                collection(
-                    db,
-                    "matches"
-                )
-            );
-
+        const snapshot = await getDocs(
+            collection(db, "matches")
+        );
 
         list.innerHTML = "";
-
 
         if (snapshot.empty) {
 
@@ -341,95 +324,80 @@ async function loadMatches() {
             return;
         }
 
+        snapshot.forEach((matchDoc) => {
 
-        snapshot.forEach(
-            (matchDoc) => {
+            const data = matchDoc.data();
 
-                const data =
-                    matchDoc.data();
+            const card = document.createElement("div");
 
+            card.className = "match-card";
 
-                const card =
-                    document.createElement(
-                        "div"
-                    );
+            card.innerHTML = `
 
+                <h3>
+                    ${data.home || ""} vs ${data.away || ""}
+                </h3>
 
-                card.className =
-                    "match-card";
+                <p>
+                    Status:
+                    ${data.status || "upcoming"}
+                </p>
 
+                <p>
+                    Time:
+                    ${data.time || "Not set"}
+                </p>
 
-                card.innerHTML = `
+                <p>
+                    Score:
+                    ${data.score || "Not available"}
+                </p>
 
-                    <h3>
-                        ${escapeHTML(
-                            data.home || ""
-                        )}
-                        vs
-                        ${escapeHTML(
-                            data.away || ""
-                        )}
-                    </h3>
+                <button
+                    class="edit-match"
+                    data-id="${matchDoc.id}">
+                    ✏️ Edit
+                </button>
 
-                    <p>
-                        Status:
-                        ${escapeHTML(
-                            data.status || ""
-                        )}
-                    </p>
+                <button
+                    class="delete-match"
+                    data-id="${matchDoc.id}">
+                    🗑️ Delete
+                </button>
 
-                    <p>
-                        Time:
-                        ${escapeHTML(
-                            data.time || "Not set"
-                        )}
-                    </p>
+            `;
 
-                    <p>
-                        Score:
-                        ${escapeHTML(
-                            data.score ||
-                            "Not available"
-                        )}
-                    </p>
+            list.appendChild(card);
 
-                    <button
-                        class="delete-match"
-                        data-id="${matchDoc.id}">
-
-                        🗑️ Delete
-
-                    </button>
-
-                `;
+        });
 
 
-                list.appendChild(card);
-
-            }
-        );
-
+        // EDIT BUTTONS
 
         document
-            .querySelectorAll(
-                ".delete-match"
-            )
-            .forEach(
-                (button) => {
+            .querySelectorAll(".edit-match")
+            .forEach((button) => {
 
-                    button.addEventListener(
-                        "click",
-                        () => {
+                button.addEventListener(
+                    "click",
+                    () => editMatch(button.dataset.id)
+                );
 
-                            deleteMatch(
-                                button.dataset.id
-                            );
+            });
 
-                        }
-                    );
 
-                }
-            );
+        // DELETE BUTTONS
+
+        document
+            .querySelectorAll(".delete-match")
+            .forEach((button) => {
+
+                button.addEventListener(
+                    "click",
+                    () => deleteMatch(button.dataset.id)
+                );
+
+            });
 
 
     } catch (error) {
