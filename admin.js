@@ -341,7 +341,8 @@ document
     });
 
 
-// ===============================
+
+        // ===============================
 // LOAD MATCHES
 // ===============================
 
@@ -373,13 +374,15 @@ async function loadMatches() {
 
         snapshot.forEach((matchDoc) => {
 
-            const data = matchDoc.data();
+            const data =
+                matchDoc.data();
 
 
             const card =
                 document.createElement("div");
 
-            card.className = "match-card";
+            card.className =
+                "match-card";
 
 
             card.innerHTML = `
@@ -401,6 +404,14 @@ async function loadMatches() {
                 </p>
 
                 <button
+                    class="edit-match"
+                    data-id="${matchDoc.id}">
+
+                    ✏️ Edit
+
+                </button>
+
+                <button
                     class="delete-match"
                     data-id="${matchDoc.id}">
 
@@ -416,13 +427,45 @@ async function loadMatches() {
         });
 
 
+        // ===============================
+        // EDIT BUTTONS
+        // ===============================
+
+        document
+            .querySelectorAll(".edit-match")
+            .forEach((button) => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        editMatch(
+                            button.dataset.id
+                        );
+
+                    }
+                );
+
+            });
+
+
+        // ===============================
+        // DELETE BUTTONS
+        // ===============================
+
         document
             .querySelectorAll(".delete-match")
             .forEach((button) => {
 
                 button.addEventListener(
                     "click",
-                    () => deleteMatch(button.dataset.id)
+                    () => {
+
+                        deleteMatch(
+                            button.dataset.id
+                        );
+
+                    }
                 );
 
             });
@@ -430,15 +473,17 @@ async function loadMatches() {
 
     } catch (error) {
 
-        console.error("Load matches error:", error);
+        console.error(
+            "Load matches error:",
+            error
+        );
 
         list.innerHTML =
             "<p>❌ Unable to load matches.</p>";
 
     }
 
-}
-
+                }
 
 // ===============================
 // DELETE MATCH
