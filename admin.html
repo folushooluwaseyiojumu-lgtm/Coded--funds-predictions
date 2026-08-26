@@ -240,113 +240,28 @@
     </section>
 
 
-<!-- ==========================================
-     FREE TIPS MANAGER
-========================================== -->
+<section>
+    <h2>⚽ Free Tips Manager</h2>
 
-<section class="admin-card">
-
-    <h2>
-        ⚽ Free Tips Manager
-    </h2>
-
-    <label>
-        Home Team
-    </label>
-
-    <input
-        type="text"
-        id="tipHome"
-        placeholder="Example: Arsenal"
-    >
-
-
-    <label>
-        Away Team
-    </label>
-
-    <input
-        type="text"
-        id="tipAway"
-        placeholder="Example: Chelsea"
-    >
-
-
-    <label>
-        Prediction
-    </label>
-
-    <input
-        type="text"
-        id="tipPrediction"
-        placeholder="Example: Arsenal Win"
-    >
-
-
-    <label>
-        Odds
-    </label>
-
-    <input
-        type="text"
-        id="tipOdds"
-        placeholder="Example: 1.85"
-    >
-
-
-    <label>
-        Match Date</label>
-
-    <input
-        type="date"
-        id="tipDate"
-    >
-
-
-    <label>
-        Status
-    </label>
+    <input id="tipHome" type="text" placeholder="Home Team">
+    <input id="tipAway" type="text" placeholder="Away Team">
+    <input id="tipPrediction" type="text" placeholder="Prediction">
+    <input id="tipOdds" type="text" placeholder="Odds">
+    <input id="tipDate" type="date">
 
     <select id="tipStatus">
-
-        <option value="pending">
-            ⏳ Pending
-        </option>
-
-        <option value="won">
-            ✅ Won
-        </option>
-
-        <option value="lost">
-            ❌ Lost
-        </option>
-
+        <option value="pending">⏳ Pending</option>
+        <option value="won">✅ Won</option>
+        <option value="lost">❌ Lost</option>
     </select>
 
-
     <button id="addTipBtn">
-
         ➕ Publish Free Tip
-
     </button>
 
-
-    <hr>
-
-
-    <h3>
-        📋 Published Free Tips
-    </h3>
-
-
     <div id="tipsList">
-
-        <p>
-            Loading free tips...
-        </p>
-
+        Loading free tips...
     </div>
-
 </section>
     <!-- CURRENT CONTENT -->
 
