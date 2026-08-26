@@ -13,24 +13,20 @@ import {
 
 
 // ==========================================
-// PAGE READY
+// PAGE STARTUP
 // ==========================================
 
 document.addEventListener("DOMContentLoaded", () => {
 
+    // Load existing data
     loadMatches();
     loadCountdown();
+    loadFreeTips();
 
-    // Only attach listeners when the buttons exist
+
+    // Countdown button
     const saveCountdownBtn =
         document.getElementById("saveCountdownBtn");
-
-    const addMatchBtn =
-        document.getElementById("addMatchBtn");
-
-    const addResultBtn =
-        document.getElementById("addResultBtn");
-
 
     if (saveCountdownBtn) {
         saveCountdownBtn.addEventListener(
@@ -40,6 +36,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    // Add match button
+    const addMatchBtn =
+        document.getElementById("addMatchBtn");
+
     if (addMatchBtn) {
         addMatchBtn.addEventListener(
             "click",
@@ -48,6 +48,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    // Add result button
+    const addResultBtn =
+        document.getElementById("addResultBtn");
+
     if (addResultBtn) {
         addResultBtn.addEventListener(
             "click",
@@ -55,9 +59,19 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     }
 
+
+    // Free tip button
+    const addTipBtn =
+        document.getElementById("addTipBtn");
+
+    if (addTipBtn) {
+        addTipBtn.addEventListener(
+            "click",
+            saveFreeTip
+        );
+    }
+
 });
-
-
 // ==========================================
 // SAVE COUNTDOWN
 // ==========================================
