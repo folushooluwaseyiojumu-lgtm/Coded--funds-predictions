@@ -75,7 +75,7 @@ document
 
 
 // ===============================
-// ADD MATCH
+// ADD / UPDATE MATCH
 // ===============================
 
 document
@@ -108,21 +108,61 @@ document
 
         try {
 
-            await addDoc(
-                collection(db, "matches"),
-                {
-                    home: home,
-                    away: away,
-                    status: status,
-                    time: time,
-                    score: score,
-                    createdAt: serverTimestamp()
-                }
-            );
+            // =========================
+            // UPDATE EXISTING MATCH
+            // =========================
+
+            if (editingMatchId) {
+
+                await setDoc(
+                    doc(db, "matches", editingMatchId),
+                    {
+                        home: home,
+                        away: away,
+                        status: status,
+                        time: time,
+                        score: score,
+                        updatedAt: serverTimestamp()
+                    },
+                    {
+                        merge: true
+                    }
+                );
+
+                alert("✅ Match updated successfully!");
+
+                editingMatchId = null;
+
+                document.getElementById(
+                    "addMatchBtn"
+                ).textContent = "➕ Add Match";
+
+            }
+
+            // =========================
+            // CREATE NEW MATCH
+            // =========================
+
+            else {
+
+                await addDoc(
+                    collection(db, "matches"),
+                    {
+                        home: home,
+                        away: away,
+                        status: status,
+                        time: time,
+                        score: score,
+                        createdAt: serverTimestamp()
+                    }
+                );
+
+                alert("✅ Match added successfully!");
+
+            }
 
 
-            alert("✅ Match added successfully!");
-
+            // Clear form
 
             document.getElementById("matchHome").value = "";
             document.getElementById("matchAway").value = "";
@@ -138,7 +178,7 @@ document
             console.error("Match error:", error);
 
             alert(
-                "❌ Could not add match:\n" +
+                "❌ Could not save match:\n" +
                 error.message
             );
 
