@@ -110,6 +110,90 @@ document
 
         try {
 
+            // ===============================
+            // UPDATE EXISTING MATCH
+            // ===============================
+
+            if (editingMatchId) {
+
+                await setDoc(
+                    doc(db, "matches", editingMatchId),
+                    {
+                        home: home,
+                        away: away,
+                        status: status,
+                        time: time,
+                        score: score,
+                        updatedAt: serverTimestamp()
+                    },
+                    {
+                        merge: true
+                    }
+                );
+
+                alert("✅ Match updated successfully!");
+
+                editingMatchId = null;
+
+                document.getElementById(
+                    "addMatchBtn"
+                ).textContent = "➕ Add Match";
+
+            }
+
+            // ===============================
+            // CREATE NEW MATCH
+            // ===============================
+
+            else {
+
+                await addDoc(
+                    collection(db, "matches"),
+                    {
+                        home: home,
+                        away: away,
+                        status: status,
+                        time: time,
+                        score: score,
+                        createdAt: serverTimestamp()
+                    }
+                );
+
+                alert("✅ Match added successfully!");
+
+            }
+
+
+            // CLEAR FORM
+
+            document.getElementById("matchHome").value = "";
+            document.getElementById("matchAway").value = "";
+            document.getElementById("matchTime").value = "";
+            document.getElementById("matchScore").value = "";
+
+            document.getElementById(
+                "matchStatus"
+            ).value = "upcoming";
+
+
+            // RELOAD MATCHES
+
+            loadMatches();
+
+
+        } catch (error) {
+
+            console.error("Match error:", error);
+
+            alert(
+                "❌ Could not save match:\n\n" +
+                error.message
+            );
+
+        }
+
+    });
+
             // =========================
             // UPDATE EXISTING MATCH
             // =========================
